@@ -190,7 +190,7 @@ const ContactSection = () => {
           <motion.div variants={itemVariants} className="lg:col-span-5">
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="text-2xl font-bold text-primary mb-2">GET IN TOUCH</h3>
-              <p className="text-gray-600 mb-8">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+              <p className="text-gray-600 mb-8">{`We'd love to hear from you. Send us a message and we'll respond as soon as possible.`}</p>
 
               {isSubmitted ? (
                 <motion.div
@@ -200,7 +200,7 @@ const ContactSection = () => {
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h4 className="text-xl font-semibold text-primary mb-2">Message Sent!</h4>
-                  <p className="text-gray-600">Thank you for contacting us. We'll get back to you soon.</p>
+                  <p className="text-gray-600">{`Thank you for contacting us. We'll get back to you soon.`}</p>
                 </motion.div>
               ) : (
                 <div className="space-y-6">
