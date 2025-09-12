@@ -1,30 +1,32 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Send, Clock, CheckCircle } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Phone, Mail, Send, Clock, CheckCircle } from "lucide-react";
+import dynamic from "next/dynamic";
 
-const DynamicGoogleMap = dynamic(() => import('./GoogleMap'), {
-    ssr: false,
-    loading: () => (
-      <div className="h-80 bg-gray-200 flex items-center justify-center">
-        Loading Map...
-      </div>
-    ),
-  });
+const DynamicGoogleMap = dynamic(() => import("./GoogleMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-80 bg-gray-200 flex items-center justify-center">
+      Loading Map...
+    </div>
+  ),
+});
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    name: '',
-    message: ''
+    email: "",
+    name: "",
+    message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -33,7 +35,7 @@ const ContactSection = () => {
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);
-        setFormData({ email: '', name: '', message: '' });
+        setFormData({ email: "", name: "", message: "" });
       }, 3000);
     }
   };
@@ -44,9 +46,9 @@ const ContactSection = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -56,9 +58,9 @@ const ContactSection = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut" as const
-      }
-    }
+        ease: "easeOut" as const,
+      },
+    },
   };
 
   return (
@@ -90,33 +92,32 @@ const ContactSection = () => {
           <motion.div variants={itemVariants} className="lg:col-span-7">
             {/* Real Google Map */}
             <motion.div
-            variants={itemVariants}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8"
+              variants={itemVariants}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8"
             >
-            <div className="h-80 relative">
+              <div className="h-80 relative">
                 <DynamicGoogleMap className="w-full h-full" />
                 {/* Optional: Overlay label on map */}
                 <motion.div
-                initial={{ y: -20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 bg-accent text-white px-3 py-2 rounded-lg shadow-lg text-sm font-semibold"
+                  initial={{ y: -20, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 bg-accent text-white px-3 py-2 rounded-lg shadow-lg text-sm font-semibold"
                 >
-                Nectar Hotels & Suites
+                  Nectar Hotels & Suites
                 </motion.div>
-            </div>
+              </div>
             </motion.div>
-
-
-            
 
             {/* Contact Information */}
             <motion.div
               variants={itemVariants}
               className="bg-white rounded-2xl shadow-lg p-8"
             >
-              <h3 className="text-2xl font-bold text-primary mb-6">INFORMATION</h3>
-              
+              <h3 className="text-2xl font-bold text-primary mb-6">
+                INFORMATION
+              </h3>
+
               <div className="space-y-6">
                 {/* Address */}
                 <motion.div
@@ -129,59 +130,76 @@ const ContactSection = () => {
                   <div>
                     <h4 className="font-semibold text-primary mb-1">ADDRESS</h4>
                     <p className="text-gray-600">
-                     No.5, Tilde Street, <br />Near Albarka Radio Station, <br />Off Sunday Awoniyi Road, <br />New GRA, Bauchi, Bauchi State
+                      No.5, Tilde Street, <br />
+                      Near Albarka Radio Station, <br />
+                      Off Sunday Awoniyi Road, <br />
+                      New GRA, Bauchi, Bauchi State
                     </p>
                   </div>
                 </motion.div>
 
-               {/* Phone */}
+                {/* Phone */}
                 <motion.div
-                whileHover={{ x: 5 }}
-                className="flex items-start space-x-4 group cursor-pointer"
+                  whileHover={{ x: 5 }}
+                  className="flex items-start space-x-4 group cursor-pointer"
                 >
-                <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
+                  <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
                     <Phone className="w-6 h-6 text-accent" />
-                </div>
-                <div>
-                    <h4 className="font-semibold text-primary mb-1">PHONE / FAX</h4>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-primary mb-1">PHONE </h4>
                     <p className="text-gray-600">
-                    <a href="tel:+2348067787196" className="hover:text-accent transition-colors">
+                      <a
+                        href="tel:+2348067787196"
+                        className="hover:text-accent transition-colors"
+                      >
                         Desk: +234 806 778 7196
-                    </a>
-                    <br />
-                    <a href="tel:+2349124248181" className="hover:text-accent transition-colors">
+                      </a>
+                      <br />
+                      <a
+                        href="tel:+2349124248181"
+                        className="hover:text-accent transition-colors"
+                      >
                         Support: +234 912 424 8181
-                    </a>
+                      </a>
                     </p>
-                </div>
+                  </div>
                 </motion.div>
 
                 {/* Email */}
                 <motion.div
-                whileHover={{ x: 5 }}
-                className="flex items-start space-x-4 group cursor-pointer"
+                  whileHover={{ x: 5 }}
+                  className="flex items-start space-x-4 group cursor-pointer"
                 >
-                <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
+                  <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
                     <Mail className="w-6 h-6 text-accent" />
-                </div>
-                <div>
+                  </div>
+                  <div>
                     <h4 className="font-semibold text-primary mb-1">E-MAIL</h4>
                     <p className="text-gray-600">
-                    <a href="mailto:sales@nectarhotels.com" className="hover:text-accent transition-colors">
-                        sales@nectarhotels.com
-                    </a>
-                    <br />
-                    <a href="mailto:reservations@nectarhotels.com" className="hover:text-accent transition-colors">
-                        reservations@nectarhotels.com
-                    </a>
-                    <br />
-                    <a href="mailto:banquet@nectarhotels.com" className="hover:text-accent transition-colors">
+                      <a
+                        href="mailto:sales@nectarhotels.com"
+                        className="hover:text-accent transition-colors"
+                      >
+                        support@nectarhotelsandsuites.com
+                      </a>
+                      <br />
+                      <a
+                        href="mailto:reservations@nectarhotels.com"
+                        className="hover:text-accent transition-colors"
+                      >
+                        reservations@nectarhotelsandsuites.com
+                      </a>
+                      <br />
+                      {/* <a
+                        href="mailto:banquet@nectarhotels.com"
+                        className="hover:text-accent transition-colors"
+                      >
                         banquet@nectarhotels.com
-                    </a>
+                      </a> */}
                     </p>
-                </div>
+                  </div>
                 </motion.div>
-
               </div>
             </motion.div>
           </motion.div>
@@ -189,7 +207,9 @@ const ContactSection = () => {
           {/* Right Column - Contact Form */}
           <motion.div variants={itemVariants} className="lg:col-span-5">
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-primary mb-2">GET IN TOUCH</h3>
+              <h3 className="text-2xl font-bold text-primary mb-2">
+                GET IN TOUCH
+              </h3>
               <p className="text-gray-600 mb-8">{`We'd love to hear from you. Send us a message and we'll respond as soon as possible.`}</p>
 
               {isSubmitted ? (
@@ -199,7 +219,9 @@ const ContactSection = () => {
                   className="text-center py-12"
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h4 className="text-xl font-semibold text-primary mb-2">Message Sent!</h4>
+                  <h4 className="text-xl font-semibold text-primary mb-2">
+                    Message Sent!
+                  </h4>
                   <p className="text-gray-600">{`Thank you for contacting us. We'll get back to you soon.`}</p>
                 </motion.div>
               ) : (
@@ -249,7 +271,9 @@ const ContactSection = () => {
                     ></textarea>
                   </motion.div>
 
-                  <p className="text-sm text-gray-500">* All fields are mandatory</p>
+                  <p className="text-sm text-gray-500">
+                    * All fields are mandatory
+                  </p>
 
                   <motion.button
                     onClick={handleSubmit}
