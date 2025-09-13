@@ -1,5 +1,4 @@
-// src/components/GoogleMap.tsx
-'use client'; // 👈 Important for Next.js 13+ app router
+'use client'; 
 
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
@@ -25,7 +24,8 @@ interface GoogleMapProps {
 
 const GoogleMapComponent = ({ className }: GoogleMapProps) => {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!, // 👈 Set this in .env
+    googleMapsApiKey: 'AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao', 
+    // googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!, 
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -71,4 +71,4 @@ const GoogleMapComponent = ({ className }: GoogleMapProps) => {
   );
 };
 
-export default GoogleMapComponent;
+export default GoogleMapComponent; 

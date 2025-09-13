@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Send, Clock, CheckCircle } from "lucide-react";
 import dynamic from "next/dynamic";
+import SimpleGoogleMap from "@/components/NewMap";
 
 const DynamicGoogleMap = dynamic(() => import("./GoogleMap"), {
   ssr: false,
@@ -95,24 +96,25 @@ const ContactSection = () => {
               variants={itemVariants}
               className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8"
             >
-              <div className="h-80 relative">
-                <DynamicGoogleMap className="w-full h-full" />
+              <div className="h-96 relative flex flex-col items-center justify-center">
+                {/* <DynamicGoogleMap className="w-full h-full" /> */}
+                <SimpleGoogleMap className="w-full h-full relative" />
                 {/* Optional: Overlay label on map */}
-                <motion.div
+                {/* <motion.div
                   initial={{ y: -20, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                   className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 bg-accent text-white px-3 py-2 rounded-lg shadow-lg text-sm font-semibold"
                 >
                   Nectar Hotels & Suites
-                </motion.div>
+                </motion.div> */}
               </div>
             </motion.div>
 
             {/* Contact Information */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-2xl shadow-lg p-8"
+              className="bg-white rounded-2xl shadow-lg p-8 px-4 md:px-8"
             >
               <h3 className="text-2xl font-bold text-primary mb-6">
                 INFORMATION
@@ -122,10 +124,10 @@ const ContactSection = () => {
                 {/* Address */}
                 <motion.div
                   whileHover={{ x: 5 }}
-                  className="flex items-start space-x-4 group cursor-pointer"
+                  className="flex items-start space-x-2 md:space-x-4 group cursor-pointer"
                 >
-                  <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
-                    <MapPin className="w-6 h-6 text-accent" />
+                  <div className="bg-accent/10 p-2 md:p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
+                    <MapPin className="w-4 h-4 md:w-6 md:h-6 text-accent" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-primary mb-1">ADDRESS</h4>
@@ -141,10 +143,10 @@ const ContactSection = () => {
                 {/* Phone */}
                 <motion.div
                   whileHover={{ x: 5 }}
-                  className="flex items-start space-x-4 group cursor-pointer"
+                  className="flex items-start space-x-2 md:space-x-4 group cursor-pointer"
                 >
-                  <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
-                    <Phone className="w-6 h-6 text-accent" />
+                  <div className="bg-accent/10 p-2 md:p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
+                    <Phone className="w-4 h-4 md:w-6 md:h-6 text-accent" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-primary mb-1">PHONE </h4>
@@ -169,34 +171,28 @@ const ContactSection = () => {
                 {/* Email */}
                 <motion.div
                   whileHover={{ x: 5 }}
-                  className="flex items-start space-x-4 group cursor-pointer"
+                  className="flex items-start space-x-2 md:space-x-4 group cursor-pointer"
                 >
-                  <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
-                    <Mail className="w-6 h-6 text-accent" />
+                  <div className="bg-accent/10 p-2 md:p-3 rounded-lg group-hover:bg-accent/20 transition-colors duration-300">
+                    <Mail className="w-4 h-4 md:w-6 md:h-6 text-accent" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-primary mb-1">E-MAIL</h4>
                     <p className="text-gray-600">
                       <a
-                        href="mailto:sales@nectarhotels.com"
-                        className="hover:text-accent transition-colors"
+                        href="mailto:support@nectarhotelsandsuites.com"
+                        className="hover:text-accent transition-colors break-all"
                       >
                         support@nectarhotelsandsuites.com
                       </a>
                       <br />
                       <a
-                        href="mailto:reservations@nectarhotels.com"
-                        className="hover:text-accent transition-colors"
+                        href="mailto:reservations@nectarhotelsandsuites.com"
+                        className="hover:text-accent transition-colors break-all"
                       >
                         reservations@nectarhotelsandsuites.com
                       </a>
-                      <br />
-                      {/* <a
-                        href="mailto:banquet@nectarhotels.com"
-                        className="hover:text-accent transition-colors"
-                      >
-                        banquet@nectarhotels.com
-                      </a> */}
+                      <br />                      
                     </p>
                   </div>
                 </motion.div>

@@ -1,3 +1,5 @@
+import SimpleGoogleMap from "@/components/NewMap";
+
 export default function Page() {
     return (
       <div className="flex flex-col items-center justify-center py-16">
@@ -5,6 +7,7 @@ export default function Page() {
         <p className="text-lg mb-8">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
+        <SimpleGoogleMap className="w-full" />
       </div>
     );
   }
