@@ -31,15 +31,32 @@ const ContactSection = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    if (formData.email && formData.name && formData.message) {
+  // const handleSubmit = () => {
+  //   if (formData.email && formData.name && formData.message) {
+  //     setIsSubmitted(true);
+  //     setTimeout(() => {
+  //       setIsSubmitted(false);
+  //       setFormData({ email: "", name: "", message: "" });
+  //     }, 3000);
+  //   }
+  // };
+
+  const handleSubmit = async () => {
+  try {
+    const res = await fetch("/api/sendMail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
       setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({ email: "", name: "", message: "" });
-      }, 3000);
     }
-  };
+  } catch (err) {
+    console.error("Error sending message:", err);
+  }
+};
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
