@@ -14,17 +14,21 @@ const Header = () => {
     { path: "/", label: "Home" },
     { path: "/about", label: "About Us" },
     { path: "/rooms", label: "Rooms & Suites" },
-    { path: "/gallery", label: "Gallery" },
     { path: "/contact", label: "Contact" },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-primary backdrop-blur supports-[backdrop-filter]:bg-primary/90 shadow-sm">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/" className="w-26 h-12 relative">
-            <Image src="/images/Update Nectar Hotels.png" alt="Logo" fill className="object-cover" />
+            <Image
+              src="/images/Update Nectar Hotels.png"
+              alt="Logo"
+              fill
+              className="object-cover"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -34,7 +38,9 @@ const Header = () => {
                 key={item.path}
                 href={item.path}
                 className={`text-sm font-800 transition-colors duration-200 hover:text-accent ${
-                  pathname === item.path ? "text-accent underline" : "text-white"
+                  pathname === item.path
+                    ? "text-accent underline"
+                    : "text-white"
                 }`}
               >
                 {item.label}

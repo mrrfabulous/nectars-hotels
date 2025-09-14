@@ -1,8 +1,7 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, Maximize, Coffee, Wifi } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-const RoomsSection = () => {
+const Rooms = () => {
   const rooms = [
     {
       id: 1,
@@ -92,7 +91,7 @@ const RoomsSection = () => {
             transition={{ duration: 0.6 }}
             className="text-5xl md:text-6xl font-bold text-primary mb-4"
           >
-            Gallery
+            Rooms
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -100,7 +99,7 @@ const RoomsSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-accent font-medium"
           >
-            Explore the beauty and comfort of our hotel.
+            An irresistible charm
           </motion.p>
         </div>
 
@@ -148,24 +147,42 @@ const RoomsSection = () => {
                   room.size === "large" ? "p-8" : "p-6"
                 } flex flex-col justify-end text-white`}
               >
-                {/* <motion.div
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
                 >
-                  <h3 className={`${room.size === 'large' ? 'text-3xl' : room.title.length > 25 ? 'text-xl' : 'text-2xl'} font-bold mb-2`}>
+                  <h3
+                    className={`${
+                      room.size === "large"
+                        ? "text-3xl"
+                        : room.title.length > 25
+                        ? "text-xl"
+                        : "text-2xl"
+                    } font-bold mb-2`}
+                  >
                     {room.title}
                   </h3>
-                  {room.size === 'large' && (
-                    <p className="text-lg opacity-90 mb-4">{room.description}</p>
+                  {room.size === "large" && (
+                    <p className="text-lg opacity-90 mb-4">
+                      {room.description}
+                    </p>
                   )}
                   <div className="flex items-center justify-between">
-                    <span className={`${room.size === 'large' ? 'text-2xl' : 'text-lg'} font-bold`}>
+                    <span
+                      className={`${
+                        room.size === "large" ? "text-2xl" : "text-lg"
+                      } font-bold`}
+                    >
                       From {room.price}/night
                     </span>
-                    <ArrowRight className={`${room.size === 'large' ? 'w-6 h-6' : 'w-5 h-5'} transition-transform group-hover:translate-x-2`} />
+                    <ArrowRight
+                      className={`${
+                        room.size === "large" ? "w-6 h-6" : "w-5 h-5"
+                      } transition-transform group-hover:translate-x-2`}
+                    />
                   </div>
-                </motion.div> */}
+                </motion.div>
               </div>
             </motion.div>
           ))}
@@ -192,4 +209,4 @@ const RoomsSection = () => {
   );
 };
 
-export default RoomsSection;
+export default Rooms;

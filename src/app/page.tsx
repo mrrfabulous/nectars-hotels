@@ -17,28 +17,43 @@ import {
 import { motion } from "framer-motion";
 import RoomsSection from "../components/RoomsSection";
 import ContactSection from "@/components/ContactSection";
+import AboutSection from "@/components/AboutSection";
 
 export default function Home() {
   const features = [
     {
       icon: <Wifi className="h-8 w-8" />,
       title: "Free Wi-Fi",
-      description: "High-speed internet throughout the hotel",
+      description: "Stay connected anytime",
     },
     {
       icon: <Car className="h-8 w-8" />,
       title: "Valet Parking",
-      description: "Complimentary parking service",
+      description: "Secure, easy parking",
     },
     {
       icon: <Utensils className="h-8 w-8" />,
       title: "Fine Dining",
-      description: "One of the best restaurants",
+      description: "Delicious meals daily",
     },
     {
-      icon: <Waves className="h-8 w-8" />,
-      title: "Luxury Spa",
-      description: "Classic spa and wellness center",
+      icon: (
+        <svg
+          className="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+          />
+        </svg>
+      ),
+      title: "Exceptional Service",
+      description: "24/7 Staff Support",
     },
   ];
 
@@ -67,8 +82,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Experience Unparalleled
-            <span className="block text-accent">Luxury</span>
+            Experience Comfort and
+            <span className="block text-accent">Convenience</span>
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed"
@@ -76,7 +91,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            Where elegance meets comfort in the heart of paradise
+            Affordable stays for business, leisure and relaxation.
           </motion.p>
           <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -103,6 +118,8 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
+
+      <AboutSection />
 
       {/* Why Choose Us Section */}
       <section className="py-20 bg-gray-50">
@@ -131,12 +148,12 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Discover the perfect blend of luxury, comfort, and personalized
-              service
+              Discover the perfect blend of hospitality, comfort, and
+              personalized service
             </motion.p>
           </motion.div>
 
-          {/* eatures Grid */}
+          {/* features Grid */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
             initial="hidden"
@@ -227,16 +244,40 @@ export default function Home() {
                 >
                   {feature.description}
                 </motion.p>
-
-                {/* Background Gradient on Hover */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-amber-50 to-blue-50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
-                  initial={{ scale: 0.8 }}
-                  whileHover={{ scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <p className="text-gray-600 mb-6">
+              Ready to experience comfort and convenience?
+            </p>
+            <Link
+              href="/rooms"
+              className="inline-flex items-center px-8 py-3 bg-primary text-secondary font-semibold rounded-full hover:bg-primary/90 transform hover:scale-105 transition-all duration-200 shadow-lg"
+            >
+              Book Now
+              <svg
+                className="ml-2 w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
           </motion.div>
         </div>
       </section>
