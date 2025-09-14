@@ -1,11 +1,11 @@
-'use client'; 
+"use client";
 
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { useEffect, useState } from 'react';
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
 
 const containerStyle = {
-  width: '100%',
-  height: '100%',
+  width: "100%",
+  height: "100%",
 };
 
 const center = {
@@ -24,8 +24,8 @@ interface GoogleMapProps {
 
 const GoogleMapComponent = ({ className }: GoogleMapProps) => {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao', 
-    // googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!, 
+    googleMapsApiKey: "AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao",
+    // googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -57,7 +57,7 @@ const GoogleMapComponent = ({ className }: GoogleMapProps) => {
             streetViewControl: false,
             fullscreenControl: false,
             mapTypeControl: false,
-            gestureHandling: 'greedy',
+            gestureHandling: "greedy",
           }}
         >
           <Marker position={markerPosition} />
@@ -71,4 +71,4 @@ const GoogleMapComponent = ({ className }: GoogleMapProps) => {
   );
 };
 
-export default GoogleMapComponent; 
+export default GoogleMapComponent;

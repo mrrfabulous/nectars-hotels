@@ -26,10 +26,10 @@ const AboutSection = () => {
 
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p className="text-lg">
-                Nestled in the heart of Bauchi, Nectar Hotels & Suites stands as
+                {`Nestled in the heart of Bauchi, Nectar Hotels & Suites stands as
                 your gateway to authentic Nigerian hospitality. We've crafted
                 more than just accommodation—we've created a sanctuary where
-                modern comfort meets traditional warmth.
+                modern comfort meets traditional warmth.`}
               </p>
             </div>
 

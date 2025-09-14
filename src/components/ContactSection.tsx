@@ -1,17 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Send, Clock, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Send, CheckCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 import SimpleGoogleMap from "@/components/NewMap";
-
-const DynamicGoogleMap = dynamic(() => import("./GoogleMap"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-80 bg-gray-200 flex items-center justify-center">
-      Loading Map...
-    </div>
-  ),
-});
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -42,21 +33,20 @@ const ContactSection = () => {
   // };
 
   const handleSubmit = async () => {
-  try {
-    const res = await fetch("/api/sendMail", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch("/api/sendMail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    if (res.ok) {
-      setIsSubmitted(true);
+      if (res.ok) {
+        setIsSubmitted(true);
+      }
+    } catch (err) {
+      console.error("Error sending message:", err);
     }
-  } catch (err) {
-    console.error("Error sending message:", err);
-  }
-};
-
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -209,7 +199,7 @@ const ContactSection = () => {
                       >
                         reservations@nectarhotelsandsuites.com
                       </a>
-                      <br />                      
+                      <br />
                     </p>
                   </div>
                 </motion.div>

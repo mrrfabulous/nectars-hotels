@@ -1,19 +1,7 @@
 "use client";
 
-// Remove the Link import from lucide-react and import from Next.js instead
 import Link from "next/link";
-import Image from "next/image";
-import {
-  Star,
-  Wifi,
-  Car,
-  Utensils,
-  Waves,
-  Award,
-  Badge,
-  Heart,
-  ArrowRight,
-} from "lucide-react";
+import { Wifi, Car, Utensils } from "lucide-react";
 import { motion } from "framer-motion";
 import RoomsSection from "../components/RoomsSection";
 import ContactSection from "@/components/ContactSection";

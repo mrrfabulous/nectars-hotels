@@ -1,6 +1,6 @@
 import SimpleGoogleMap from "@/components/NewMap";
 import Image from "next/image";
-import { MapPin, Heart, DollarSign, Hotel, Star } from "lucide-react";
+import { MapPin, Heart, DollarSign } from "lucide-react";
 
 export default function Page() {
   return (
@@ -212,9 +212,9 @@ export default function Page() {
               Find Us in Bauchi
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Strategically located in the heart of Bauchi, we're easily
+              {`Strategically located in the heart of Bauchi, we're easily
               accessible and close to major attractions, business centers, and
-              transport links.
+              transport links.`}
             </p>
           </div>
 
