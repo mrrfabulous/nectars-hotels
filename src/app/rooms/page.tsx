@@ -1,6 +1,5 @@
 "use client";
 
-import ContactSection from "@/components/ContactSection";
 import Room from "@/components/RoomPageComponent";
 
 export default function Page() {

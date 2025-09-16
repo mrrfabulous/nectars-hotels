@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, Maximize, Coffee, Wifi } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const RoomsSection = () => {
   const rooms = [

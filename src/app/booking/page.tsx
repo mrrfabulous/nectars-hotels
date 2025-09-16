@@ -196,8 +196,8 @@ export default function BookingPage() {
               Booking Request Sent!
             </h2>
             <p className="text-green-700 mb-6 max-w-md mx-auto">
-              Thank you for choosing Nectar Hotels & Suites. We'll contact you
-              within 24 hours to confirm your reservation.
+              {`Thank you for choosing Nectar Hotels & Suites. We'll contact you
+              within 24 hours to confirm your reservation.`}
             </p>
             <button
               onClick={() => setSubmitted(false)}
@@ -452,9 +452,9 @@ export default function BookingPage() {
               </button>
 
               <p className="text-center text-sm text-gray-500 mt-4">
-                By submitting this form, you agree to our booking terms and
+                {` By submitting this form, you agree to our booking terms and
                 conditions. We'll contact you within 24 hours to confirm
-                availability.
+                availability.`}
               </p>
             </form>
 
