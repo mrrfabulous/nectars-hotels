@@ -130,11 +130,9 @@ export default function Page() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-primary mb-2">
-                Event Facilities
-              </h3>
+              <h3 className="font-semibold text-primary mb-2">Laundry</h3>
               <p className="text-sm text-gray-600">
-                Meeting facilities for small to medium gatherings
+                We offer a dedicated laundry service
               </p>
             </div>
 

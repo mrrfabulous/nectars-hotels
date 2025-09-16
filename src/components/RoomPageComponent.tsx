@@ -1,58 +1,59 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-const Rooms = () => {
+const Room = () => {
   const rooms = [
     {
       id: 1,
-      title: "Prestige Room",
+      title: "Presidential Suite",
       description: "Luxury accommodations with premium amenities",
-      image: "/images/breakfast-portrait.jpg",
+      image: "/images/room 1.jpeg",
       features: ["King Size Bed", "City View", "Premium Amenities"],
       price: "₦ 50,599",
       size: "large",
     },
     {
       id: 2,
-      title: "Classic Room",
+      title: "Presidential Suite",
       description: "Comfortable and elegant standard rooms",
-      image: "/images/classic-room.jpg",
+      image: "/images/room 1.jpeg",
       features: ["Queen Bed", "Modern Furnishing", "Free WiFi"],
       price: "₦ 29,999",
       size: "medium",
     },
     {
       id: 3,
-      title: "Classic Room with balcony or terrace",
+      title: "Standard Room",
       description: "Classic comfort with outdoor space",
-      image: "/images/classic-balcony.jpg",
+      image: "/images/room 2.jpeg",
       features: ["Queen Bed", "Private Balcony", "Garden View"],
       price: "₦ 24,999",
       size: "medium",
     },
     {
       id: 4,
-      title: "Family Room with terrace",
+      title: "Standard Room",
       description: "Spacious accommodations for families",
-      image: "/images/family-terrace.jpg",
+      image: "/images/room 3.jpeg",
       features: ["Multiple Beds", "Terrace Access", "Family Amenities"],
       price: "₦ 39,999",
       size: "medium",
     },
     {
       id: 5,
-      title: "Family Room",
+      title: "Standard Room",
       description: "Perfect for family getaways",
-      image: "/images/family-room.jpg",
+      image: "/images/room 4.jpeg",
       features: ["Twin Beds", "Extra Space", "Kid-Friendly"],
       price: "₦ 34,999",
       size: "large",
     },
     {
       id: 6,
-      title: "Family Room ",
+      title: "Presidential Suite",
       description: "Perfect for family getaways",
-      image: "/images/breakfast-portrait.jpg",
+      image: "/images/room 5.jpeg",
       features: ["Twin Beds", "Extra Space", "Kid-Friendly"],
       price: "₦ 34,999",
       size: "medium",
@@ -84,7 +85,7 @@ const Rooms = () => {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
+        {/* <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -99,9 +100,9 @@ const Rooms = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-accent font-medium"
           >
-            An irresistible charm
+            Explore the beauty and comfort of our rooms and suites.
           </motion.p>
-        </div>
+        </div> */}
 
         {/* Rooms Grid */}
         <motion.div
@@ -112,34 +113,23 @@ const Rooms = () => {
           className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[300px]"
         >
           {rooms.map((room, index) => (
-            <motion.div
+            <motion.a
               key={room.id}
               variants={itemVariants}
+              href="/booking"
               className={`
                 ${
                   room.size === "large"
                     ? "md:col-span-6 md:row-span-2"
                     : "md:col-span-6"
-                } 
+                }
                 relative group overflow-hidden rounded-2xl cursor-pointer
               `}
             >
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style={{
-                  backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-${
-                    index === 0
-                      ? "1584132967334-10e028bd69f7"
-                      : index === 1
-                      ? "1571003123894-1f0594d2b5d9"
-                      : index === 2
-                      ? "1566665797739-1674de7a421a"
-                      : index === 3
-                      ? "1582719478250-c89cae4dc85b"
-                      : index === 4
-                      ? "1582719478250-c89cae4dc85b"
-                      : "1584132967334-10e028bd69f7"
-                  }?ixlib=rb-4.0.3')`,
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${room.image}')`,
                 }}
               />
               <div
@@ -184,7 +174,7 @@ const Rooms = () => {
                   </div>
                 </motion.div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
 
@@ -195,18 +185,19 @@ const Rooms = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <motion.button
+          <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center px-8 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
+            href="/booking"
           >
-            <span className="mr-2">DISCOVER OUR ROOMS</span>
+            <span className="mr-2">BOOK ROOM</span>
             <ArrowRight className="w-5 h-5" />
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>
   );
 };
 
-export default Rooms;
+export default Room;

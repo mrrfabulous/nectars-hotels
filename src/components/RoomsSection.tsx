@@ -6,56 +6,30 @@ const RoomsSection = () => {
   const rooms = [
     {
       id: 1,
-      title: "Prestige Room",
+      title: "Presidential Suite",
       description: "Luxury accommodations with premium amenities",
-      image: "/images/breakfast-portrait.jpg",
+      image: "/images/room 1.jpeg",
       features: ["King Size Bed", "City View", "Premium Amenities"],
       price: "₦ 50,599",
       size: "large",
     },
     {
       id: 2,
-      title: "Classic Room",
-      description: "Comfortable and elegant standard rooms",
-      image: "/images/classic-room.jpg",
+      title: "Dinning",
+      description:
+        "Comfortable and resturant with local and international cuisines",
+      image: "/images/dinning.jpeg",
       features: ["Queen Bed", "Modern Furnishing", "Free WiFi"],
       price: "₦ 29,999",
       size: "medium",
     },
     {
       id: 3,
-      title: "Classic Room with balcony or terrace",
+      title: "Standard Room",
       description: "Classic comfort with outdoor space",
-      image: "/images/classic-balcony.jpg",
+      image: "/images/room 2.jpeg",
       features: ["Queen Bed", "Private Balcony", "Garden View"],
       price: "₦ 24,999",
-      size: "medium",
-    },
-    {
-      id: 4,
-      title: "Family Room with terrace",
-      description: "Spacious accommodations for families",
-      image: "/images/family-terrace.jpg",
-      features: ["Multiple Beds", "Terrace Access", "Family Amenities"],
-      price: "₦ 39,999",
-      size: "medium",
-    },
-    {
-      id: 5,
-      title: "Family Room",
-      description: "Perfect for family getaways",
-      image: "/images/family-room.jpg",
-      features: ["Twin Beds", "Extra Space", "Kid-Friendly"],
-      price: "₦ 34,999",
-      size: "large",
-    },
-    {
-      id: 6,
-      title: "Family Room ",
-      description: "Perfect for family getaways",
-      image: "/images/breakfast-portrait.jpg",
-      features: ["Twin Beds", "Extra Space", "Kid-Friendly"],
-      price: "₦ 34,999",
       size: "medium",
     },
   ];
@@ -128,19 +102,7 @@ const RoomsSection = () => {
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style={{
-                  backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-${
-                    index === 0
-                      ? "1584132967334-10e028bd69f7"
-                      : index === 1
-                      ? "1571003123894-1f0594d2b5d9"
-                      : index === 2
-                      ? "1566665797739-1674de7a421a"
-                      : index === 3
-                      ? "1582719478250-c89cae4dc85b"
-                      : index === 4
-                      ? "1582719478250-c89cae4dc85b"
-                      : "1584132967334-10e028bd69f7"
-                  }?ixlib=rb-4.0.3')`,
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${room.image}')`,
                 }}
               />
               <div
@@ -148,24 +110,25 @@ const RoomsSection = () => {
                   room.size === "large" ? "p-8" : "p-6"
                 } flex flex-col justify-end text-white`}
               >
-                {/* <motion.div
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
                 >
-                  <h3 className={`${room.size === 'large' ? 'text-3xl' : room.title.length > 25 ? 'text-xl' : 'text-2xl'} font-bold mb-2`}>
+                  <h3
+                    className={`${
+                      room.size === "large"
+                        ? "text-3xl"
+                        : room.title.length > 25
+                        ? "text-xl"
+                        : "text-2xl"
+                    } font-bold mb-2`}
+                  >
                     {room.title}
                   </h3>
-                  {room.size === 'large' && (
-                    <p className="text-lg opacity-90 mb-4">{room.description}</p>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className={`${room.size === 'large' ? 'text-2xl' : 'text-lg'} font-bold`}>
-                      From {room.price}/night
-                    </span>
-                    <ArrowRight className={`${room.size === 'large' ? 'w-6 h-6' : 'w-5 h-5'} transition-transform group-hover:translate-x-2`} />
-                  </div>
-                </motion.div> */}
+
+                  <p className="text-lg opacity-90 mb-4">{room.description}</p>
+                </motion.div>
               </div>
             </motion.div>
           ))}
@@ -178,14 +141,15 @@ const RoomsSection = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <motion.button
+          <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center px-8 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
+            href="/rooms"
           >
             <span className="mr-2">DISCOVER OUR ROOMS</span>
             <ArrowRight className="w-5 h-5" />
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>
