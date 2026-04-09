@@ -4,7 +4,14 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
 import "leaflet/dist/leaflet.css";
+import {
+  defaultSocialImage,
+  getHotelStructuredData,
+  siteName,
+  siteUrl,
+} from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,9 +34,65 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Nectar Hotels & Suites",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteName,
+    template: `%s | ${siteName}`,
+  },
   description:
     "Nectar Hotels & Suites is a luxury hotel located in Bauchi, Nigeria. It offers a range of amenities and services to make your stay comfortable and enjoyable.",
+  keywords: [
+    "hotel in Bauchi",
+    "Nectar Hotels and Suites",
+    "Bauchi accommodation",
+    "Presidential Suite Bauchi",
+    "Standard Room Bauchi",
+    "hotel booking Bauchi",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  applicationName: siteName,
+  category: "hotel",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+  },
+  openGraph: {
+    title: siteName,
+    description:
+      "Stay in comfort at Nectar Hotels & Suites in Bauchi. Explore our Presidential Suite, Standard Room, gallery, and direct booking options.",
+    url: siteUrl,
+    siteName,
+    locale: "en_NG",
+    type: "website",
+    images: [
+      {
+        url: defaultSocialImage,
+        width: 1200,
+        height: 630,
+        alt: siteName,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteName,
+    description:
+      "Explore Nectar Hotels & Suites in Bauchi, from our room options to our gallery and direct booking page.",
+    images: [defaultSocialImage],
+  },
 };
 
 export default function RootLayout({
@@ -37,27 +100,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const hotelStructuredData = getHotelStructuredData();
+
   return (
     <html lang="en">
       <body
         className={`${inter.className} ${inter.variable} ${nunito.variable} ${poppins.variable} antialiased`}
       >
-        {/* Tawk.to Script */}
-        <Script id="tawkto" strategy="afterInteractive">
-          {`
-            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-            (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/68c363e167c586192c675247/1j4tjsasr';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
-            })();
-          `}
+        <Script
+          id="hotel-schema"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+        >
+          {JSON.stringify(hotelStructuredData)}
         </Script>
         <Header />
         {children}
+        <WhatsAppButton />
         <Footer />
       </body>
     </html>

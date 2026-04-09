@@ -1,0 +1,25 @@
+
+> my-app@0.1.0 dev
+> next dev --turbopack --port 3100
+
+   ▲ Next.js 15.5.2 (Turbopack)
+   - Local:        http://localhost:3100
+   - Network:      http://192.168.0.229:3100
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 7.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 17.6s
+ ○ Compiling /gallery ...
+ GET / 200 in 1435ms
+ ✓ Compiled /gallery in 5.5s
+ GET /about 200 in 7010ms
+ GET /gallery 200 in 7722ms
+ ○ Compiling /contact ...
+ GET /contact 200 in 3744ms
+ ✓ Compiled /contact in 4s
+ GET /booking 200 in 5433ms
+ GET /rooms 200 in 5427ms
+ GET / 200 in 798ms
+[?25h

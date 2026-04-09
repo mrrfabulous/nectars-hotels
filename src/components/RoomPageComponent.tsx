@@ -1,202 +1,113 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck, BedDouble } from "lucide-react";
+import { formatNaira, roomTypes } from "@/lib/hotelContent";
 
-const Room = () => {
-  const rooms = [
-    {
-      id: 1,
-      title: "Presidential Suite",
-      description: "Luxury accommodations with premium amenities",
-      image: "/images/room 1.jpeg",
-      features: ["King Size Bed", "City View", "Premium Amenities"],
-      price: "₦ 50,599",
-      size: "large",
-    },
-    {
-      id: 2,
-      title: "Presidential Suite",
-      description: "Comfortable and elegant standard rooms",
-      image: "/images/room 1.jpeg",
-      features: ["Queen Bed", "Modern Furnishing", "Free WiFi"],
-      price: "₦ 29,999",
-      size: "medium",
-    },
-    {
-      id: 3,
-      title: "Standard Room",
-      description: "Classic comfort with outdoor space",
-      image: "/images/room 2.jpeg",
-      features: ["Queen Bed", "Private Balcony", "Garden View"],
-      price: "₦ 24,999",
-      size: "medium",
-    },
-    {
-      id: 4,
-      title: "Standard Room",
-      description: "Spacious accommodations for families",
-      image: "/images/room 3.jpeg",
-      features: ["Multiple Beds", "Terrace Access", "Family Amenities"],
-      price: "₦ 39,999",
-      size: "medium",
-    },
-    {
-      id: 5,
-      title: "Standard Room",
-      description: "Perfect for family getaways",
-      image: "/images/room 4.jpeg",
-      features: ["Twin Beds", "Extra Space", "Kid-Friendly"],
-      price: "₦ 34,999",
-      size: "large",
-    },
-    {
-      id: 6,
-      title: "Presidential Suite",
-      description: "Perfect for family getaways",
-      image: "/images/room 5.jpeg",
-      features: ["Twin Beds", "Extra Space", "Kid-Friendly"],
-      price: "₦ 34,999",
-      size: "medium",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-
+const RoomPageComponent = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        {/* <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold text-primary mb-4"
-          >
-            Rooms
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-accent font-medium"
-          >
-            Explore the beauty and comfort of our rooms and suites.
-          </motion.p>
-        </div> */}
-
-        {/* Rooms Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[300px]"
-        >
-          {rooms.map((room, index) => (
-            <motion.a
+    <section className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="space-y-16">
+          {roomTypes.map((room, index) => (
+            <motion.article
               key={room.id}
-              variants={itemVariants}
-              href="/booking"
-              className={`
-                ${
-                  room.size === "large"
-                    ? "md:col-span-6 md:row-span-2"
-                    : "md:col-span-6"
-                }
-                relative group overflow-hidden rounded-2xl cursor-pointer
-              `}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: index * 0.12 }}
+              viewport={{ once: true, margin: "-80px" }}
+              className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 shadow-xl"
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${room.image}')`,
-                }}
-              />
-              <div
-                className={`absolute inset-0 ${
-                  room.size === "large" ? "p-8" : "p-6"
-                } flex flex-col justify-end text-white`}
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                >
-                  <h3
-                    className={`${
-                      room.size === "large"
-                        ? "text-3xl"
-                        : room.title.length > 25
-                        ? "text-xl"
-                        : "text-2xl"
-                    } font-bold mb-2`}
-                  >
-                    {room.title}
-                  </h3>
-                  {room.size === "large" && (
-                    <p className="text-lg opacity-90 mb-4">
-                      {room.description}
-                    </p>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`${
-                        room.size === "large" ? "text-2xl" : "text-lg"
-                      } font-bold`}
-                    >
-                      From {room.price}/night
-                    </span>
-                    <ArrowRight
-                      className={`${
-                        room.size === "large" ? "w-6 h-6" : "w-5 h-5"
-                      } transition-transform group-hover:translate-x-2`}
+              <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+                <div className="bg-white p-5">
+                  <div className="relative mb-4 h-[340px] overflow-hidden rounded-[1.5rem] md:h-[420px]">
+                    <Image
+                      src={room.featuredImage}
+                      alt={room.name}
+                      fill
+                      sizes="(min-width: 1024px) 55vw, 100vw"
+                      className="object-cover"
                     />
                   </div>
-                </motion.div>
-              </div>
-            </motion.a>
-          ))}
-        </motion.div>
 
-        {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
-        >
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
-            href="/booking"
-          >
-            <span className="mr-2">BOOK ROOM</span>
-            <ArrowRight className="w-5 h-5" />
-          </motion.a>
-        </motion.div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {room.gallery.map((image, imageIndex) => (
+                      <div
+                        key={`${room.id}-${image}`}
+                        className="relative h-40 overflow-hidden rounded-2xl"
+                      >
+                        <Image
+                          src={image}
+                          alt={`${room.name} view ${imageIndex + 1}`}
+                          fill
+                          sizes="(min-width: 640px) 25vw, 100vw"
+                          className="object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col justify-center p-8 md:p-10">
+                  <div className="mb-4 inline-flex w-fit items-center rounded-full bg-accent/10 px-4 py-2 text-sm font-semibold text-accent">
+                    <BedDouble className="mr-2 h-4 w-4" />
+                    {room.idealFor}
+                  </div>
+
+                  <h2 className="mb-3 text-4xl font-bold text-primary">
+                    {room.name}
+                  </h2>
+                  <p className="mb-4 text-lg text-accent">{room.tagline}</p>
+                  <p className="mb-6 max-w-xl text-base leading-relaxed text-gray-600">
+                    {room.longDescription}
+                  </p>
+
+                  <div className="mb-6 rounded-2xl bg-primary p-5 text-white">
+                    <p className="text-sm uppercase tracking-[0.2em] text-white/70">
+                      Room Rate
+                    </p>
+                    <p className="mt-2 text-3xl font-bold">
+                      {formatNaira(room.pricePerNight)}
+                      <span className="ml-2 text-base font-medium text-white/70">
+                        / night
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="mb-8 grid gap-3 text-sm text-gray-700 sm:grid-cols-2">
+                    {room.features.map((feature) => (
+                      <div key={feature} className="flex items-start gap-2">
+                        <BadgeCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Link
+                      href="/booking"
+                      className="inline-flex items-center justify-center rounded-full bg-primary px-7 py-3 font-semibold text-white transition-colors hover:bg-primary/90"
+                    >
+                      Book {room.name}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                    <Link
+                      href="/gallery"
+                      className="inline-flex items-center justify-center rounded-full border border-primary px-7 py-3 font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+                    >
+                      View Gallery
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-export default Room;
+export default RoomPageComponent;

@@ -1,155 +1,113 @@
-import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { formatNaira, homepageRoomPreview } from "@/lib/hotelContent";
 
 const RoomsSection = () => {
-  const rooms = [
-    {
-      id: 1,
-      title: "Presidential Suite",
-      description: "Luxury accommodations with premium amenities",
-      image: "/images/room 1.jpeg",
-      features: ["King Size Bed", "City View", "Premium Amenities"],
-      price: "₦ 50,599",
-      size: "large",
-    },
-    {
-      id: 2,
-      title: "Dinning",
-      description:
-        "Comfortable and resturant with local and international cuisines",
-      image: "/images/dinning.jpeg",
-      features: ["Queen Bed", "Modern Furnishing", "Free WiFi"],
-      price: "₦ 29,999",
-      size: "medium",
-    },
-    {
-      id: 3,
-      title: "Standard Room",
-      description: "Classic comfort with outdoor space",
-      image: "/images/room 2.jpeg",
-      features: ["Queen Bed", "Private Balcony", "Garden View"],
-      price: "₦ 24,999",
-      size: "medium",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
+    <section className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold text-primary mb-4"
+            className="mb-4 text-5xl font-bold text-primary md:text-6xl"
           >
-            Gallery
+            Our Rooms
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-accent font-medium"
+            className="mx-auto max-w-3xl text-xl font-medium text-accent"
           >
-            Explore the beauty and comfort of our hotel.
+            Choose between our two room categories, each designed for comfort,
+            privacy, and a restful stay in Bauchi.
           </motion.p>
         </div>
 
-        {/* Rooms Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[300px]"
-        >
-          {rooms.map((room, index) => (
-            <motion.div
+        <div className="grid gap-8 lg:grid-cols-2">
+          {homepageRoomPreview.map((room, index) => (
+            <motion.article
               key={room.id}
-              variants={itemVariants}
-              className={`
-                ${
-                  room.size === "large"
-                    ? "md:col-span-6 md:row-span-2"
-                    : "md:col-span-6"
-                } 
-                relative group overflow-hidden rounded-2xl cursor-pointer
-              `}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              viewport={{ once: true, margin: "-80px" }}
+              className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg"
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${room.image}')`,
-                }}
-              />
-              <div
-                className={`absolute inset-0 ${
-                  room.size === "large" ? "p-8" : "p-6"
-                } flex flex-col justify-end text-white`}
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                >
-                  <h3
-                    className={`${
-                      room.size === "large"
-                        ? "text-3xl"
-                        : room.title.length > 25
-                        ? "text-xl"
-                        : "text-2xl"
-                    } font-bold mb-2`}
-                  >
-                    {room.title}
-                  </h3>
-
-                  <p className="text-lg opacity-90 mb-4">{room.description}</p>
-                </motion.div>
+              <div className="relative h-80">
+                <Image
+                  src={room.featuredImage}
+                  alt={room.name}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <p className="mb-2 text-sm uppercase tracking-[0.25em] text-white/75">
+                    From {formatNaira(room.pricePerNight)} per night
+                  </p>
+                  <h3 className="text-3xl font-bold">{room.name}</h3>
+                </div>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
 
-        {/* CTA Button */}
+              <div className="p-6">
+                <p className="mb-5 text-base leading-relaxed text-gray-600">
+                  {room.shortDescription}
+                </p>
+
+                <ul className="mb-6 grid gap-3 text-sm text-gray-700 sm:grid-cols-2">
+                  {room.features.slice(0, 4).map((feature) => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-accent" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href="/rooms"
+                    className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-semibold text-white transition-colors hover:bg-primary/90"
+                  >
+                    Explore This Room
+                  </Link>
+                  <Link
+                    href="/booking"
+                    className="inline-flex items-center justify-center rounded-full border border-primary px-6 py-3 font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+                  >
+                    Book Now
+                  </Link>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
+          transition={{ duration: 0.6, delay: 0.25 }}
+          viewport={{ once: true }}
+          className="mt-14 flex flex-col items-center justify-center gap-4 text-center sm:flex-row"
         >
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
+          <Link
             href="/rooms"
+            className="inline-flex items-center rounded-lg bg-primary px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-accent"
           >
-            <span className="mr-2">DISCOVER OUR ROOMS</span>
-            <ArrowRight className="w-5 h-5" />
-          </motion.a>
+            View All Room Details
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+          <Link
+            href="/gallery"
+            className="inline-flex items-center rounded-lg border border-primary px-8 py-4 font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white"
+          >
+            Browse Gallery
+          </Link>
         </motion.div>
       </div>
     </section>

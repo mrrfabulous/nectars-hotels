@@ -4,43 +4,41 @@ import Link from "next/link";
 const AboutSection = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-accent/5 via-white to-secondary/50 py-16">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-y-48 translate-x-48"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full blur-2xl translate-y-32 -translate-x-32"></div>
+      <div className="absolute right-0 top-0 h-96 w-96 translate-x-48 -translate-y-48 rounded-full bg-accent/5 blur-3xl" />
+      <div className="absolute bottom-0 left-0 h-64 w-64 -translate-x-32 translate-y-32 rounded-full bg-accent/5 blur-2xl" />
 
-      <div className="max-w-6xl mx-auto px-6 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content side */}
+      <div className="relative mx-auto max-w-6xl px-6">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="space-y-6">
             <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 text-accent font-medium text-sm tracking-wide uppercase">
-                <div className="w-8 h-px bg-accent"></div>
+              <div className="inline-flex items-center space-x-2 text-sm font-medium uppercase tracking-wide text-accent">
+                <div className="h-px w-8 bg-accent" />
                 <span>Discover Our Story</span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight">
+              <h2 className="text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
                 Experience the
                 <span className="block text-accent">Nectar Difference</span>
               </h2>
             </div>
 
-            <div className="space-y-4 text-gray-600 leading-relaxed">
+            <div className="space-y-4 leading-relaxed text-gray-600">
               <p className="text-lg">
                 {`Nestled in the heart of Bauchi, Nectar Hotels & Suites stands as
                 your gateway to authentic Nigerian hospitality. We've crafted
-                more than just accommodation—we've created a sanctuary where
+                more than just accommodation - we've created a sanctuary where
                 modern comfort meets traditional warmth.`}
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <div className="flex flex-col gap-4 pt-4 sm:flex-row">
               <Link
                 href="/about"
-                className="group inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold rounded-full hover:bg-primary transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="group inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:bg-primary hover:shadow-xl"
               >
                 Explore Our Story
                 <svg
-                  className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -56,39 +54,36 @@ const AboutSection = () => {
 
               <div className="flex items-center space-x-4 text-sm text-gray-500">
                 <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="h-2 w-2 rounded-full bg-accent" />
                   <span>Est. in Bauchi</span>
                 </div>
                 <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="h-2 w-2 rounded-full bg-accent" />
                   <span>Boutique Experience</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Image side */}
           <div className="relative">
             <div className="relative">
-              {/* Main image */}
-              <div className="relative h-80 lg:h-96 rounded-2xl overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
+              <div className="relative h-80 rotate-2 overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 hover:rotate-0 lg:h-96">
                 <Image
                   src="/images/compound2.jpg"
-                  alt="Nectar Hotels & Suites - Experience luxury and comfort"
+                  alt="Nectar Hotels & Suites exterior view"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   style={{ objectFit: "cover" }}
-                  className="hover:scale-110 transition-transform duration-700"
+                  className="transition-transform duration-700 hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 to-transparent" />
               </div>
 
-              {/* Floating badge */}
-              <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 border border-amber-100">
+              <div className="absolute -bottom-4 -left-4 rounded-2xl border border-amber-100 bg-white p-4 shadow-xl">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
                     <svg
-                      className="w-6 h-6 text-amber-600"
+                      className="h-6 w-6 text-amber-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -108,13 +103,12 @@ const AboutSection = () => {
                 </div>
               </div>
 
-              {/* Decorative dots */}
-              <div className="absolute -top-4 -right-4 grid grid-cols-3 gap-2">
+              <div className="absolute -right-4 -top-4 grid grid-cols-3 gap-2">
                 {Array.from({ length: 9 }).map((_, i) => (
                   <div
                     key={i}
-                    className="w-2 h-2 bg-accent/80 rounded-full opacity-60"
-                  ></div>
+                    className="h-2 w-2 rounded-full bg-accent/80 opacity-60"
+                  />
                 ))}
               </div>
             </div>

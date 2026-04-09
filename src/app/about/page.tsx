@@ -1,26 +1,46 @@
+import type { Metadata } from "next";
+import {
+  FadeInSection,
+  StaggerGroup,
+  StaggerItem,
+} from "@/components/PageReveal";
 import SimpleGoogleMap from "@/components/NewMap";
 import Image from "next/image";
 import { MapPin, Heart, DollarSign } from "lucide-react";
+import { hotelContact } from "@/lib/hotelContent";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "About Us",
+  description:
+    "Learn more about Nectar Hotels & Suites, our hospitality style, our location in Bauchi, and what makes our stay experience different.",
+  path: "/about",
+  keywords: [
+    "about Nectar Hotels and Suites",
+    "hotel in Bauchi Nigeria",
+    "Bauchi accommodation",
+  ],
+});
 
 export default function Page() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary to-primary/90 text-white py-20">
-        <div className="max-w-6xl mx-auto px-6 text-center">
+        <FadeInSection className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             About Nectar Hotels & Suites
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Discover authentic hospitality in the heart of Bauchi
           </p>
-        </div>
+        </FadeInSection>
       </section>
 
       {/* Main Content */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <FadeInSection className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             {/* Content Side */}
             <div className="space-y-6">
               <div>
@@ -64,11 +84,11 @@ export default function Page() {
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-xl"></div>
               <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary/20 rounded-full blur-lg"></div>
             </div>
-          </div>
+          </FadeInSection>
 
           {/* What We Offer Section */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <div className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <StaggerItem className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-accent"
@@ -90,9 +110,9 @@ export default function Page() {
               <p className="text-sm text-gray-600">
                 Well-appointed rooms and suites with modern amenities
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <StaggerItem className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-accent"
@@ -112,9 +132,9 @@ export default function Page() {
               <p className="text-sm text-gray-600">
                 On-site dining with local and international dishes
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <StaggerItem className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-accent"
@@ -134,9 +154,9 @@ export default function Page() {
               <p className="text-sm text-gray-600">
                 We offer a dedicated laundry service
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <StaggerItem className="text-center p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-accent"
@@ -156,19 +176,19 @@ export default function Page() {
               <p className="text-sm text-gray-600">
                 Friendly, attentive staff available around the clock
               </p>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerGroup>
 
           {/* Why Choose Us */}
-          <div className="bg-gradient-to-r from-primary to-primary/90 text-white rounded-2xl p-8 md:p-12 mb-16">
+          <FadeInSection className="bg-gradient-to-r from-primary to-primary/90 text-white rounded-2xl p-8 md:p-12 mb-16">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">
                 Why Choose Nectar Hotels & Suites?
               </h2>
               <div className="w-24 h-1 bg-accent mx-auto"></div>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
+            <StaggerGroup className="grid md:grid-cols-3 gap-8 text-center">
+              <StaggerItem>
                 <div className="flex justify-center mb-4">
                   <DollarSign className="w-12 h-12 text-accent" />
                 </div>
@@ -176,8 +196,8 @@ export default function Page() {
                 <p className="text-blue-100">
                   Exceptional quality accommodation at competitive rates
                 </p>
-              </div>
-              <div>
+              </StaggerItem>
+              <StaggerItem>
                 <div className="flex justify-center mb-4">
                   <MapPin className="w-12 h-12 text-accent" />
                 </div>
@@ -185,8 +205,8 @@ export default function Page() {
                 <p className="text-blue-100">
                   Easy access to local attractions and business districts
                 </p>
-              </div>
-              <div>
+              </StaggerItem>
+              <StaggerItem>
                 <div className="flex justify-center mb-4">
                   <Heart className="w-12 h-12 text-accent" />
                 </div>
@@ -196,15 +216,15 @@ export default function Page() {
                 <p className="text-blue-100">
                   Genuine hospitality with modern comfort
                 </p>
-              </div>
-            </div>
-          </div>
+              </StaggerItem>
+            </StaggerGroup>
+          </FadeInSection>
         </div>
       </section>
 
       {/* Location Section */}
       <section className="py-16 bg-neutral">
-        <div className="max-w-6xl mx-auto px-6">
+        <FadeInSection className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary mb-4">
               Find Us in Bauchi
@@ -244,7 +264,9 @@ export default function Page() {
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                       />
                     </svg>
-                    <span className="text-gray-700">Bauchi, Nigeria</span>
+                    <span className="text-gray-700">
+                      {hotelContact.addressLines.join(", ")}
+                    </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <svg
@@ -260,7 +282,9 @@ export default function Page() {
                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                       />
                     </svg>
-                    <span className="text-gray-700">+234 806 778 7196</span>
+                    <span className="text-gray-700">
+                      {hotelContact.phoneDisplay}
+                    </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <svg
@@ -277,7 +301,7 @@ export default function Page() {
                       />
                     </svg>
                     <span className="text-gray-700">
-                      support@nectarhotelsandsuites.com
+                      {hotelContact.email}
                     </span>
                   </div>
                 </div>
@@ -291,7 +315,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </div>
+        </FadeInSection>
       </section>
     </div>
   );

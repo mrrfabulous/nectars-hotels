@@ -1,7 +1,6 @@
 "use client";
 
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { useState } from "react";
 
 const containerStyle = {
   width: "100%",
@@ -9,14 +8,11 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 10.3141, // Bauchi, Nigeria approx.
-  lng: 9.8468,
+  lat: 10.306842967680982,
+  lng: 9.785494974391938,
 };
 
-const markerPosition = {
-  lat: 10.3141,
-  lng: 9.8468,
-};
+const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
 interface GoogleMapProps {
   className?: string;
@@ -24,19 +20,18 @@ interface GoogleMapProps {
 
 const GoogleMapComponent = ({ className }: GoogleMapProps) => {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao",
-    // googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+    googleMapsApiKey,
   });
 
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-
-  const onLoad = (mapInstance: google.maps.Map) => {
-    setMap(mapInstance);
-  };
-
-  const onUnmount = () => {
-    setMap(null);
-  };
+  if (!googleMapsApiKey) {
+    return (
+      <div
+        className={`${className} flex items-center justify-center bg-gray-200 text-sm text-gray-600`}
+      >
+        Google Maps key not configured.
+      </div>
+    );
+  }
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -49,8 +44,6 @@ const GoogleMapComponent = ({ className }: GoogleMapProps) => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={15}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
           options={{
             disableDefaultUI: true,
             zoomControl: true,
@@ -60,7 +53,7 @@ const GoogleMapComponent = ({ className }: GoogleMapProps) => {
             gestureHandling: "greedy",
           }}
         >
-          <Marker position={markerPosition} />
+          <Marker position={center} />
         </GoogleMap>
       ) : (
         <div className="w-full h-full bg-gray-200 flex items-center justify-center">
