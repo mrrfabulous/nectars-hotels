@@ -4,10 +4,11 @@ import {
   ExternalLink,
   MapPin,
   MessageCircleMore,
-  Phone,
   Star,
 } from "lucide-react";
-import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
+// Phone,
+// import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
+import {  hotelContact } from "@/lib/hotelContent";
 import { FadeInSection, StaggerGroup, StaggerItem } from "@/components/PageReveal";
 
 const highlightCards = [

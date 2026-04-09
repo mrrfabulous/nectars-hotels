@@ -1,7 +1,9 @@
 "use client";
 
-import { ExternalLink, MessageCircleMore, Star } from "lucide-react";
-import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
+import { ExternalLink, Star } from "lucide-react";
+// import { ExternalLink, MessageCircleMore, Star } from "lucide-react";
+// import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
+import { hotelContact } from "@/lib/hotelContent";
 
 export default function BookingReviewStrip() {
   return (
@@ -17,7 +19,7 @@ export default function BookingReviewStrip() {
             Check Our 5-Star Reviews on Google!
           </h3>
           <p className="mt-2 text-gray-600">
-            We take pride in providing exceptional service and unforgettable experiences for our guests. Don't just take our word for it – see what our satisfied customers have to say about their stays at Nectar Hotels and Suites. Your perfect getaway awaits!
+            We take pride in providing exceptional service and unforgettable experiences for our guests. Don&apos;t just take our word for it, see what our satisfied customers have to say about their stays at Nectar Hotels and Suites. Your perfect getaway awaits!
           </p>
         </div>
 

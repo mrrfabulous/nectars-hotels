@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Wifi, Car, MessageCircleMore, Phone, Utensils } from "lucide-react";
+// import { Wifi, Car, MessageCircleMore, Phone, Utensils } from "lucide-react";
+import { Wifi, Car, Utensils } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import RoomsSection from "../components/RoomsSection";
 import ContactSection from "@/components/ContactSection";
