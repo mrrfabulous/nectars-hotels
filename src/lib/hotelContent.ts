@@ -7,6 +7,7 @@ export const hotelContact = {
   reservationsEmail: "reservations@nectarhotelsandsuites.com",
   whatsappNumber: "2348037457342",
   whatsappDisplay: "+234 803 745 7342",
+  googleReviewUrl: "https://g.page/r/Cf-eb0cEVi5DEAE/review",
   siteUrl: "https://www.nectarhotelsandsuites.com",
   plusCode: "8Q4Q+P6 Bauchi",
   postalCode: "740102",

@@ -26,6 +26,7 @@ import {
   roomTypes,
   type RoomType,
 } from "@/lib/hotelContent";
+// import BookingReviewStrip from "@/components/BookingReviewStrip";
 
 const amenities = [
   { icon: Wifi, name: "Free Wi-Fi" },
@@ -37,6 +38,15 @@ const amenities = [
 export default function BookingClient() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [bookingSummary, setBookingSummary] = useState<{
+    roomName: string;
+    checkIn: string;
+    checkOut: string;
+    adults: string;
+    children: string;
+    totalAmount: string;
+  } | null>(null);
   const [error, setError] = useState("");
   const [selectedRoomId, setSelectedRoomId] = useState<RoomType["id"] | "">("");
   const [checkInDate, setCheckInDate] = useState("");
@@ -112,6 +122,36 @@ export default function BookingClient() {
       const result = await response.json();
 
       if (result.success) {
+        const totalAmount = formatNaira(
+          selectedRoom.pricePerNight *
+            Math.ceil(
+              (checkOutDate.getTime() - checkIn.getTime()) /
+                (1000 * 60 * 60 * 24)
+            )
+        );
+
+        setSuccessMessage(
+          result.message ||
+            "Booking request sent successfully! We will contact you shortly to confirm your reservation."
+        );
+        setBookingSummary({
+          roomName: selectedRoom.name,
+          checkIn: new Date(checkInDate).toLocaleDateString("en-NG", {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }),
+          checkOut: new Date(checkOut).toLocaleDateString("en-NG", {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }),
+          adults,
+          children,
+          totalAmount,
+        });
         setSubmitted(true);
         setSelectedRoomId("");
         setCheckInDate("");
@@ -121,6 +161,7 @@ export default function BookingClient() {
         setAdults("1");
         setChildren("0");
         setSpecialRequests("");
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         setError(
           result.message ||
@@ -178,16 +219,86 @@ export default function BookingClient() {
             <h2 className="mb-4 text-3xl font-bold text-green-800">
               Booking Request Sent
             </h2>
-            <p className="mx-auto mb-6 max-w-md text-green-700">
-              Thank you for choosing Nectar Hotels & Suites. We will contact you
-              within 24 hours to confirm your reservation.
+            <p className="mx-auto mb-6 max-w-2xl text-green-700">
+              {successMessage}
             </p>
-            <button
-              onClick={() => setSubmitted(false)}
-              className="transform rounded-xl bg-gradient-to-r from-green-600 to-green-700 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-green-700 hover:to-green-800 hover:shadow-xl"
-            >
-              Make Another Booking
-            </button>
+
+            {bookingSummary && (
+              <div className="mx-auto mb-6 max-w-2xl rounded-2xl border border-green-200 bg-white/80 p-6 text-left shadow-sm">
+                <h3 className="mb-4 text-lg font-semibold text-green-900">
+                  Booking Summary
+                </h3>
+                <div className="grid gap-3 text-sm text-slate-700 md:grid-cols-2">
+                  <p>
+                    <span className="font-semibold text-slate-900">Room:</span>{" "}
+                    {bookingSummary.roomName}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-900">
+                      Estimated total:
+                    </span>{" "}
+                    {bookingSummary.totalAmount}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-900">
+                      Check-in:
+                    </span>{" "}
+                    {bookingSummary.checkIn}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-900">
+                      Check-out:
+                    </span>{" "}
+                    {bookingSummary.checkOut}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-900">
+                      Adults:
+                    </span>{" "}
+                    {bookingSummary.adults}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-900">
+                      Children:
+                    </span>{" "}
+                    {bookingSummary.children}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="mx-auto mb-8 max-w-2xl rounded-2xl bg-white/70 p-5 text-left text-sm text-slate-700">
+              <p className="font-semibold text-slate-900">What happens next</p>
+              <p className="mt-2">
+                Our team will review availability and contact you within 24
+                hours. If you need to add details quickly, you can continue on
+                WhatsApp or call the front desk directly.
+              </p>
+            </div>
+
+            <div className="flex flex-col justify-center gap-3 sm:flex-row">
+              <button
+                onClick={() => {
+                  setSubmitted(false);
+                  setSuccessMessage("");
+                  setBookingSummary(null);
+                }}
+                className="transform rounded-xl bg-gradient-to-r from-green-600 to-green-700 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-green-700 hover:to-green-800 hover:shadow-xl"
+              >
+                Make Another Booking
+              </button>
+              <a
+                href={createWhatsAppLink(
+                  "Hello Nectar Hotels & Suites, I just sent a booking request and would like to follow up."
+                )}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#25D366] px-8 py-3 font-semibold text-[#25D366] transition-colors hover:bg-[#25D366] hover:text-white"
+              >
+                <MessageCircleMore className="h-5 w-5" />
+                Follow Up on WhatsApp
+              </a>
+            </div>
           </div>
         ) : (
           <div className="space-y-12">
@@ -268,9 +379,10 @@ export default function BookingClient() {
               </div>
             </div>
 
+
             <form
               onSubmit={handleSubmit}
-              className="animate-fadeInUp animation-delay-1000 rounded-2xl bg-white p-8 opacity-0 translate-y-8 shadow-xl transition-all duration-700"
+              className="animate-fadeInUp animation-delay-1200 rounded-2xl bg-white p-8 opacity-0 translate-y-8 shadow-xl transition-all duration-700"
             >
               <div className="mb-10">
                 <h3 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900">
@@ -455,7 +567,7 @@ export default function BookingClient() {
               </p>
             </form>
 
-            <div className="animate-fadeInUp animation-delay-1200 rounded-2xl bg-gradient-to-br from-primary to-primary p-8 opacity-0 translate-y-8 text-white transition-all duration-700">
+            <div className="animate-fadeInUp animation-delay-1400 rounded-2xl bg-gradient-to-br from-primary to-primary p-8 opacity-0 translate-y-8 text-white transition-all duration-700">
               <div className="mb-6 text-center">
                 <h3 className="mb-2 text-2xl font-bold">Need Assistance?</h3>
                 <p className="text-blue-100">
@@ -501,6 +613,10 @@ export default function BookingClient() {
                 </div>
               </div>
             </div>
+
+            {/* <div className="animate-fadeInUp animation-delay-1000 opacity-0 translate-y-8">
+              <BookingReviewStrip />
+            </div> */}
           </div>
         )}
       </div>
@@ -558,6 +674,10 @@ export default function BookingClient() {
 
         .animation-delay-1200 {
           animation-delay: 1200ms;
+        }
+
+        .animation-delay-1400 {
+          animation-delay: 1400ms;
         }
       `}</style>
     </div>

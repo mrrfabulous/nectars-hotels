@@ -9,7 +9,8 @@ import RoomsSection from "../components/RoomsSection";
 import ContactSection from "@/components/ContactSection";
 import AboutSection from "@/components/AboutSection";
 import HomeLoader from "@/components/HomeLoader";
-import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
+// import TestimonialsSection from "@/components/TestimonialsSection";
+// import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
 
 const heroImage = "/images/hero.jpeg";
 const minimumLoaderTimeMs = 700;
@@ -373,6 +374,8 @@ export default function Home() {
 
           {/* Rooms Section */}
           <RoomsSection />
+
+          {/* <TestimonialsSection /> */}
 
           {/* Contact Section */}
           <ContactSection />

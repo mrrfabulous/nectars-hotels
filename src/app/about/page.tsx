@@ -9,6 +9,7 @@ import Image from "next/image";
 import { MapPin, Heart, DollarSign } from "lucide-react";
 import { hotelContact } from "@/lib/hotelContent";
 import { createPageMetadata } from "@/lib/seo";
+import BookingReviewStrip from "@/components/BookingReviewStrip";
 
 export const metadata: Metadata = createPageMetadata({
   title: "About Us",
@@ -178,6 +179,11 @@ export default function Page() {
               </p>
             </StaggerItem>
           </StaggerGroup>
+
+          <div className="mb-16">
+              <BookingReviewStrip />
+         </div>
+            
 
           {/* Why Choose Us */}
           <FadeInSection className="bg-gradient-to-r from-primary to-primary/90 text-white rounded-2xl p-8 md:p-12 mb-16">
