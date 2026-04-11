@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BedDouble,
@@ -26,7 +26,6 @@ import {
   roomTypes,
   type RoomType,
 } from "@/lib/hotelContent";
-// import BookingReviewStrip from "@/components/BookingReviewStrip";
 
 const amenities = [
   { icon: Wifi, name: "Free Wi-Fi" },
@@ -35,18 +34,22 @@ const amenities = [
   { icon: Shield, name: "24/7 Security" },
 ];
 
+type BookingSummary = {
+  roomName: string;
+  checkIn: string;
+  checkOut: string;
+  adults: string;
+  children: string;
+  totalAmount: string;
+};
+
 export default function BookingClient() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [bookingSummary, setBookingSummary] = useState<{
-    roomName: string;
-    checkIn: string;
-    checkOut: string;
-    adults: string;
-    children: string;
-    totalAmount: string;
-  } | null>(null);
+  const [bookingSummary, setBookingSummary] = useState<BookingSummary | null>(
+    null
+  );
   const [error, setError] = useState("");
   const [selectedRoomId, setSelectedRoomId] = useState<RoomType["id"] | "">("");
   const [checkInDate, setCheckInDate] = useState("");
@@ -56,8 +59,21 @@ export default function BookingClient() {
   const [adults, setAdults] = useState("1");
   const [children, setChildren] = useState("0");
   const [specialRequests, setSpecialRequests] = useState("");
+  const successCardRef = useRef<HTMLDivElement | null>(null);
 
   const selectedRoom = roomTypes.find((room) => room.id === selectedRoomId);
+
+  useEffect(() => {
+    if (!submitted) {
+      return;
+    }
+
+    successCardRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    successCardRef.current?.focus();
+  }, [submitted]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,6 +113,10 @@ export default function BookingClient() {
     }
 
     try {
+      const nights = Math.ceil(
+        (checkOutDate.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
+      );
+
       const response = await fetch("/api/sendBooking", {
         method: "POST",
         headers: {
@@ -112,9 +132,7 @@ export default function BookingClient() {
           adults,
           children,
           specialRequests,
-          nights: Math.ceil(
-            (checkOutDate.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
-          ),
+          nights,
           amount: selectedRoom.pricePerNight,
         }),
       });
@@ -122,14 +140,6 @@ export default function BookingClient() {
       const result = await response.json();
 
       if (result.success) {
-        const totalAmount = formatNaira(
-          selectedRoom.pricePerNight *
-            Math.ceil(
-              (checkOutDate.getTime() - checkIn.getTime()) /
-                (1000 * 60 * 60 * 24)
-            )
-        );
-
         setSuccessMessage(
           result.message ||
             "Booking request sent successfully! We will contact you shortly to confirm your reservation."
@@ -150,7 +160,7 @@ export default function BookingClient() {
           }),
           adults,
           children,
-          totalAmount,
+          totalAmount: formatNaira(selectedRoom.pricePerNight * nights),
         });
         setSubmitted(true);
         setSelectedRoomId("");
@@ -161,7 +171,6 @@ export default function BookingClient() {
         setAdults("1");
         setChildren("0");
         setSpecialRequests("");
-        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         setError(
           result.message ||
@@ -186,7 +195,7 @@ export default function BookingClient() {
             Book Your Perfect Stay
           </h1>
           <p className="mx-auto mb-8 max-w-3xl text-xl text-blue-100 animate-fadeInUp animation-delay-200">
-            Choose between our Standard Room and Presidential Suite for a stay
+            Choose between our Executive Room and Presidential Suite for a stay
             that fits your comfort and budget.
           </p>
           <div className="mx-auto h-1 w-24 bg-yellow-400 animate-fadeInUp animation-delay-400" />
@@ -211,175 +220,181 @@ export default function BookingClient() {
       </section>
 
       <div className="mx-auto max-w-6xl px-6 py-16">
-        {submitted ? (
-          <div className="animate-scaleIn scale-0 rounded-2xl border border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-8 text-center shadow-lg transition-all duration-500">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <CheckCircle className="h-8 w-8 text-green-600" />
-            </div>
-            <h2 className="mb-4 text-3xl font-bold text-green-800">
-              Booking Request Sent
-            </h2>
-            <p className="mx-auto mb-6 max-w-2xl text-green-700">
-              {successMessage}
-            </p>
-
-            {bookingSummary && (
-              <div className="mx-auto mb-6 max-w-2xl rounded-2xl border border-green-200 bg-white/80 p-6 text-left shadow-sm">
-                <h3 className="mb-4 text-lg font-semibold text-green-900">
-                  Booking Summary
-                </h3>
-                <div className="grid gap-3 text-sm text-slate-700 md:grid-cols-2">
-                  <p>
-                    <span className="font-semibold text-slate-900">Room:</span>{" "}
-                    {bookingSummary.roomName}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-slate-900">
-                      Estimated total:
-                    </span>{" "}
-                    {bookingSummary.totalAmount}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-slate-900">
-                      Check-in:
-                    </span>{" "}
-                    {bookingSummary.checkIn}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-slate-900">
-                      Check-out:
-                    </span>{" "}
-                    {bookingSummary.checkOut}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-slate-900">
-                      Adults:
-                    </span>{" "}
-                    {bookingSummary.adults}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-slate-900">
-                      Children:
-                    </span>{" "}
-                    {bookingSummary.children}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div className="mx-auto mb-8 max-w-2xl rounded-2xl bg-white/70 p-5 text-left text-sm text-slate-700">
-              <p className="font-semibold text-slate-900">What happens next</p>
-              <p className="mt-2">
-                Our team will review availability and contact you within 24
-                hours. If you need to add details quickly, you can continue on
-                WhatsApp or call the front desk directly.
-              </p>
+        <div className="space-y-12">
+          <div className="animate-fadeInUp animation-delay-800 rounded-2xl bg-white p-8 opacity-0 translate-y-8 shadow-xl transition-all duration-700">
+            <div className="mb-8 text-center">
+              <h2 className="mb-4 flex items-center justify-center gap-3 text-3xl font-bold text-gray-900">
+                <BedDouble className="h-8 w-8 text-primary" />
+                Choose Your Room
+              </h2>
+              <div className="mx-auto h-1 w-24 bg-yellow-400" />
             </div>
 
-            <div className="flex flex-col justify-center gap-3 sm:flex-row">
-              <button
-                onClick={() => {
-                  setSubmitted(false);
-                  setSuccessMessage("");
-                  setBookingSummary(null);
-                }}
-                className="transform rounded-xl bg-gradient-to-r from-green-600 to-green-700 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-green-700 hover:to-green-800 hover:shadow-xl"
-              >
-                Make Another Booking
-              </button>
-              <a
-                href={createWhatsAppLink(
-                  "Hello Nectar Hotels & Suites, I just sent a booking request and would like to follow up."
-                )}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#25D366] px-8 py-3 font-semibold text-[#25D366] transition-colors hover:bg-[#25D366] hover:text-white"
-              >
-                <MessageCircleMore className="h-5 w-5" />
-                Follow Up on WhatsApp
-              </a>
+            <div className="grid gap-6 md:grid-cols-2">
+              {roomTypes.map((room) => (
+                <label
+                  key={room.id}
+                  className={`relative cursor-pointer overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.01] ${
+                    selectedRoomId === room.id
+                      ? "scale-[1.01] border-blue-500 ring-2 ring-blue-500 shadow-lg"
+                      : "border-gray-200 hover:shadow-lg"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="roomType"
+                    value={room.id}
+                    checked={selectedRoomId === room.id}
+                    className="absolute right-4 top-4 z-10"
+                    required
+                    onChange={(e) =>
+                      setSelectedRoomId(e.target.value as RoomType["id"])
+                    }
+                  />
+
+                  <div className="relative h-52">
+                    <Image
+                      src={room.featuredImage}
+                      alt={room.name}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="p-6">
+                    <div className="mb-3 flex flex-col items-start gap-2 md:flex-row md:justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {room.name}
+                        </h3>
+                        <p className="mt-1 text-sm text-accent">
+                          {room.tagline}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-bold text-primary">
+                          {formatNaira(room.pricePerNight)}
+                        </span>
+                        <span className="text-sm text-gray-500">/night</span>
+                      </div>
+                    </div>
+
+                    <p className="mb-4 text-gray-600">{room.shortDescription}</p>
+
+                    {room.highlights?.length ? (
+                      <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-700">
+                          Why it stands out
+                        </p>
+                        <p className="text-sm text-slate-700">
+                          {room.highlights[0]}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    <div className="space-y-2">
+                      {room.features.slice(0, 4).map((feature) => (
+                        <div key={feature} className="flex items-center gap-2">
+                          <Star className="h-4 w-4 fill-current text-yellow-500" />
+                          <span className="text-sm text-gray-700">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </label>
+              ))}
             </div>
           </div>
-        ) : (
-          <div className="space-y-12">
-            <div className="animate-fadeInUp animation-delay-800 rounded-2xl bg-white p-8 opacity-0 translate-y-8 shadow-xl transition-all duration-700">
-              <div className="mb-8 text-center">
-                <h2 className="mb-4 flex items-center justify-center gap-3 text-3xl font-bold text-gray-900">
-                  <BedDouble className="h-8 w-8 text-primary" />
-                  Choose Your Room
-                </h2>
-                <div className="mx-auto h-1 w-24 bg-yellow-400" />
+
+          {submitted ? (
+            <div
+              ref={successCardRef}
+              tabIndex={-1}
+              role="status"
+              aria-live="polite"
+              className="animate-fadeInUp animation-delay-1200 rounded-2xl bg-white p-8 opacity-0 translate-y-8 shadow-xl transition-all duration-700 focus:outline-none focus:ring-4 focus:ring-green-200"
+            >
+              <div className="py-6 text-center">
+                <CheckCircle className="mx-auto mb-4 h-16 w-16 text-green-500" />
+                <h3 className="mb-3 text-3xl font-bold text-primary">
+                  Booking Request Sent!
+                </h3>
+                <p className="mx-auto max-w-2xl text-gray-600">
+                  {successMessage}
+                </p>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                {roomTypes.map((room) => (
-                  <label
-                    key={room.id}
-                    className={`relative cursor-pointer overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.01] ${
-                      selectedRoomId === room.id
-                        ? "scale-[1.01] border-blue-500 ring-2 ring-blue-500 shadow-lg"
-                        : "border-gray-200 hover:shadow-lg"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="roomType"
-                      value={room.id}
-                      checked={selectedRoomId === room.id}
-                      className="absolute right-4 top-4 z-10"
-                      required
-                      onChange={(e) =>
-                        setSelectedRoomId(e.target.value as RoomType["id"])
-                      }
-                    />
+              <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-green-200 bg-green-50 p-5 text-sm text-slate-700">
+                <p className="font-semibold text-slate-900">What happens next</p>
+                <p className="mt-2">
+                  We have received your request and our team will review room
+                  availability. A confirmation has also been sent to your email,
+                  and we will contact you within 24 hours.
+                </p>
+              </div>
 
-                    <div className="relative h-52">
-                      <Image
-                        src={room.featuredImage}
-                        alt={room.name}
-                        fill
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
+              {bookingSummary && (
+                <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left shadow-sm">
+                  <h4 className="mb-4 text-lg font-semibold text-primary">
+                    Booking Summary
+                  </h4>
+                  <div className="grid gap-3 text-sm text-slate-700 md:grid-cols-2">
+                    <p>
+                      <span className="font-semibold text-slate-900">Room:</span>{" "}
+                      {bookingSummary.roomName}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-slate-900">
+                        Estimated total:
+                      </span>{" "}
+                      {bookingSummary.totalAmount}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-slate-900">
+                        Check-in:
+                      </span>{" "}
+                      {bookingSummary.checkIn}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-slate-900">
+                        Check-out:
+                      </span>{" "}
+                      {bookingSummary.checkOut}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-slate-900">
+                        Adults:
+                      </span>{" "}
+                      {bookingSummary.adults}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-slate-900">
+                        Children:
+                      </span>{" "}
+                      {bookingSummary.children}
+                    </p>
+                  </div>
+                </div>
+              )}
 
-                    <div className="p-6">
-                      <div className="mb-3 flex flex-col items-start gap-2 md:flex-row md:justify-between">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900">
-                            {room.name}
-                          </h3>
-                          <p className="mt-1 text-sm text-accent">
-                            {room.tagline}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-2xl font-bold text-primary">
-                            {formatNaira(room.pricePerNight)}
-                          </span>
-                          <span className="text-sm text-gray-500">/night</span>
-                        </div>
-                      </div>
-
-                      <p className="mb-4 text-gray-600">{room.shortDescription}</p>
-
-                      <div className="space-y-2">
-                        {room.features.slice(0, 4).map((feature) => (
-                          <div key={feature} className="flex items-center gap-2">
-                            <Star className="h-4 w-4 fill-current text-yellow-500" />
-                            <span className="text-sm text-gray-700">
-                              {feature}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </label>
-                ))}
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                <a
+                  href={createWhatsAppLink(
+                    "Hello Nectar Hotels & Suites, I just sent a booking request and would like to follow up."
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#25D366] px-8 py-3 font-semibold text-[#25D366] transition-colors hover:bg-[#25D366] hover:text-white"
+                >
+                  <MessageCircleMore className="h-5 w-5" />
+                  Follow Up on WhatsApp
+                </a>
               </div>
             </div>
-
-
+          ) : (
             <form
               onSubmit={handleSubmit}
               className="animate-fadeInUp animation-delay-1200 rounded-2xl bg-white p-8 opacity-0 translate-y-8 shadow-xl transition-all duration-700"
@@ -566,59 +581,59 @@ export default function BookingClient() {
                 availability.
               </p>
             </form>
+          )}
 
-            <div className="animate-fadeInUp animation-delay-1400 rounded-2xl bg-gradient-to-br from-primary to-primary p-8 opacity-0 translate-y-8 text-white transition-all duration-700">
-              <div className="mb-6 text-center">
-                <h3 className="mb-2 text-2xl font-bold">Need Assistance?</h3>
-                <p className="text-blue-100">
-                  Our friendly team is here to help with your booking by phone,
-                  WhatsApp, or email.
-                </p>
-              </div>
-
-              <div className="grid gap-6 text-center md:grid-cols-3">
-                <div className="group">
-                  <Phone className="mx-auto mb-2 h-8 w-8 text-yellow-400 transition-transform group-hover:scale-110" />
-                  <p className="font-semibold">Call Us</p>
-                  <a
-                    href={`tel:${hotelContact.phoneHref}`}
-                    className="text-sm text-blue-100"
-                  >
-                    {hotelContact.phoneDisplay}
-                  </a>
-                </div>
-                <div className="group">
-                  <MessageCircleMore className="mx-auto mb-2 h-8 w-8 text-yellow-400 transition-transform group-hover:scale-110" />
-                  <p className="font-semibold">WhatsApp</p>
-                  <a
-                    href={createWhatsAppLink(
-                      "Hello Nectar Hotels & Suites, I would like help with a booking."
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm text-blue-100"
-                  >
-                    {hotelContact.whatsappDisplay}
-                  </a>
-                </div>
-                <div className="group">
-                  <Mail className="mx-auto mb-2 h-8 w-8 text-yellow-400 transition-transform group-hover:scale-110" />
-                  <p className="font-semibold">Email Us</p>
-                  <a
-                    href={`mailto:${hotelContact.reservationsEmail}`}
-                    className="break-all text-sm text-blue-100"
-                  >
-                    {hotelContact.reservationsEmail}
-                  </a>
-                </div>
-              </div>
+          <div className="animate-fadeInUp animation-delay-1400 rounded-2xl bg-gradient-to-br from-primary to-primary p-8 opacity-0 translate-y-8 text-white transition-all duration-700">
+            <div className="mb-6 text-center">
+              <h3 className="mb-2 text-2xl font-bold">Need Assistance?</h3>
+              <p className="text-blue-100">
+                Our friendly team is here to help with your booking by phone,
+                WhatsApp, or email.
+              </p>
             </div>
 
-            {/* <div className="animate-fadeInUp animation-delay-1000 opacity-0 translate-y-8">
-              <BookingReviewStrip />
-            </div> */}
+            <div className="grid gap-6 text-center md:grid-cols-3">
+              <div className="group">
+                <Phone className="mx-auto mb-2 h-8 w-8 text-yellow-400 transition-transform group-hover:scale-110" />
+                <p className="font-semibold">Call Us</p>
+                <a
+                  href={`tel:${hotelContact.phoneHref}`}
+                  className="text-sm text-blue-100"
+                >
+                  {hotelContact.phoneDisplay}
+                </a>
+              </div>
+              <div className="group">
+                <MessageCircleMore className="mx-auto mb-2 h-8 w-8 text-yellow-400 transition-transform group-hover:scale-110" />
+                <p className="font-semibold">WhatsApp</p>
+                <a
+                  href={createWhatsAppLink(
+                    "Hello Nectar Hotels & Suites, I would like help with a booking."
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm text-blue-100"
+                >
+                  {hotelContact.whatsappDisplay}
+                </a>
+              </div>
+              <div className="group">
+                <Mail className="mx-auto mb-2 h-8 w-8 text-yellow-400 transition-transform group-hover:scale-110" />
+                <p className="font-semibold">Email Us</p>
+                <a
+                  href={`mailto:${hotelContact.reservationsEmail}`}
+                  className="break-all text-sm text-blue-100"
+                >
+                  {hotelContact.reservationsEmail}
+                </a>
+              </div>
+            </div>
           </div>
-        )}
+
+          {/* <div className="animate-fadeInUp animation-delay-1000 opacity-0 translate-y-8">
+            <BookingReviewStrip />
+          </div> */}
+        </div>
       </div>
 
       <style jsx>{`
@@ -633,23 +648,8 @@ export default function BookingClient() {
           }
         }
 
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
         .animate-fadeInUp {
           animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .animate-scaleIn {
-          animation: scaleIn 0.5s ease-out forwards;
         }
 
         .animation-delay-200 {

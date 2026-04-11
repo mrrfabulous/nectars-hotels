@@ -6,12 +6,12 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Rooms and Suites",
   description:
-    "Explore the Presidential Suite and Standard Room at Nectar Hotels & Suites in Bauchi, with room features, rates, and booking access.",
+    "Explore the Presidential Suite and Executive Room at Nectar Hotels & Suites in Bauchi, with room features, rates, and booking access.",
   path: "/rooms",
   keywords: [
     "rooms in Bauchi",
     "Presidential Suite Bauchi",
-    "Standard Room Bauchi",
+    "Executive Room Bauchi",
     "Nectar Hotels rooms",
   ],
 });
@@ -26,7 +26,7 @@ export default function Page() {
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Nectar Hotels & Suites offers two room categories: the Presidential
-            Suite and the Standard Room, each designed for comfort and a
+            Suite and the Executive Room, each designed for comfort and a
             restful stay.
           </p>
         </FadeInSection>

@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     "Nectar Hotels and Suites",
     "Bauchi accommodation",
     "Presidential Suite Bauchi",
-    "Standard Room Bauchi",
+    "Executive Room Bauchi",
     "hotel booking Bauchi",
   ],
   alternates: {
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteName,
     description:
-      "Stay in comfort at Nectar Hotels & Suites in Bauchi. Explore our Presidential Suite, Standard Room, gallery, and direct booking options.",
+      "Stay in comfort at Nectar Hotels & Suites in Bauchi. Explore our Presidential Suite, Executive Room, gallery, and direct booking options.",
     url: siteUrl,
     siteName,
     locale: "en_NG",

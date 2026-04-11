@@ -5,6 +5,82 @@ import { formatNaira, hotelContact } from "@/lib/hotelContent";
 const logoUrl =
   "https://www.nectarhotelsandsuites.com/images/Update%20Nectar%20Hotels.png";
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function renderEmailShell({
+  badge,
+  title,
+  subtitle,
+  body,
+}: {
+  badge: string;
+  title: string;
+  subtitle: string;
+  body: string;
+}) {
+  return `
+    <div style="margin:0;background:#eef5ff;padding:32px 12px;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;color:#1f2937;">
+      <div style="max-width:680px;margin:0 auto;">
+        <div style="overflow:hidden;border-radius:28px;background:#ffffff;box-shadow:0 24px 60px rgba(15,23,42,0.12);">
+          <div style="background:linear-gradient(135deg,#0b1d39 0%,#1d4ed8 60%,#38bdf8 100%);padding:32px 28px 42px;text-align:center;">
+            <div style="display:inline-block;border-radius:999px;background:rgba(255,255,255,0.16);padding:8px 14px;color:#dbeafe;font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;">
+              ${badge}
+            </div>
+            <div style="margin-top:18px;">
+              <img
+                src="${logoUrl}"
+                alt="Nectar Hotels & Suites"
+                style="width:100%;max-width:190px;height:auto;"
+              />
+            </div>
+            <h1 style="margin:22px 0 10px;color:#ffffff;font-size:30px;line-height:1.2;font-weight:800;">
+              ${title}
+            </h1>
+            <p style="margin:0 auto;max-width:520px;color:#dbeafe;font-size:15px;line-height:1.7;">
+              ${subtitle}
+            </p>
+          </div>
+
+          <div style="padding:28px;">
+            ${body}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSection(title: string, content: string) {
+  return `
+    <div style="margin-bottom:18px;border:1px solid #dbe7ff;border-radius:22px;background:#f8fbff;padding:22px;">
+      <h2 style="margin:0 0 14px;color:#0b1d39;font-size:18px;font-weight:800;">
+        ${title}
+      </h2>
+      ${content}
+    </div>
+  `;
+}
+
+function renderRow(label: string, value: string, emphasize = false) {
+  return `
+    <tr>
+      <td style="padding:10px 0;color:#64748b;font-size:14px;vertical-align:top;">
+        ${label}
+      </td>
+      <td style="padding:10px 0;color:${emphasize ? "#0b1d39" : "#1f2937"};font-size:${emphasize ? "16px" : "14px"};font-weight:${emphasize ? "800" : "600"};text-align:right;vertical-align:top;">
+        ${value}
+      </td>
+    </tr>
+  `;
+}
+
 export async function POST(req: Request) {
   try {
     const emailUser = process.env.EMAIL_USER;
@@ -30,6 +106,16 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    const safeName = escapeHtml(String(name));
+    const safeEmail = escapeHtml(String(email));
+    const safePhone = escapeHtml(String(phone));
+    const safeRoomType = escapeHtml(String(roomType));
+    const safeAdults = escapeHtml(String(adults));
+    const safeChildren = escapeHtml(String(children));
+    const safeSpecialRequests = specialRequests
+      ? escapeHtml(String(specialRequests))
+      : "";
 
     const checkInDate = new Date(checkIn).toLocaleDateString("en-NG", {
       weekday: "long",
@@ -81,150 +167,121 @@ export async function POST(req: Request) {
 
     await transporter.verify();
 
-    await transporter.sendMail({
-      from: `"Nectar Hotels & Suites" <${emailUser}>`,
-      to: hotelContact.reservationsEmail,
-      subject: `New Booking Request - ${roomType} for ${name}`,
-      html: `
-        <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
-          <div style="background:linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%);padding:30px;text-align:center;">
-            <img
-              src="${logoUrl}"
-              alt="Nectar Hotels & Suites"
-              style="width:100%;max-width:180px;height:auto;margin-bottom:10px;"
-            />
-            <h1 style="color:#ffffff;margin:0;font-size:28px;font-weight:bold;">
-              New Booking Request
-            </h1>
-            <p style="color:#e0f2fe;margin:10px 0 0 0;font-size:16px;">
-              Nectar Hotels & Suites
+    const bookingSummaryTable = `
+      <table style="width:100%;border-collapse:collapse;">
+        ${renderRow("Room type", safeRoomType)}
+        ${renderRow("Check-in", escapeHtml(checkInDate))}
+        ${renderRow("Check-out", escapeHtml(checkOutDate))}
+        ${renderRow("Duration", `${nights} night${nights > 1 ? "s" : ""}`)}
+        ${renderRow("Rate", `${escapeHtml(formattedRate)} / night`)}
+        ${renderRow("Guests", `${safeAdults} ${adultLabel}, ${safeChildren} ${childLabel}`)}
+        ${renderRow("Estimated total", escapeHtml(formattedTotal), true)}
+      </table>
+    `;
+
+    const internalHtml = renderEmailShell({
+      badge: "New Booking Request",
+      title: "A new reservation request just came in",
+      subtitle:
+        "A guest has submitted a booking request through the Nectar Hotels & Suites website.",
+      body: `
+        ${renderSection(
+          "Guest details",
+          `
+            <table style="width:100%;border-collapse:collapse;">
+              ${renderRow("Guest name", safeName)}
+              ${renderRow("Email", `<a href="mailto:${safeEmail}" style="color:#2563eb;text-decoration:none;">${safeEmail}</a>`)}
+              ${renderRow("Phone", `<a href="tel:${safePhone}" style="color:#2563eb;text-decoration:none;">${safePhone}</a>`)}
+            </table>
+          `
+        )}
+
+        ${renderSection("Booking summary", bookingSummaryTable)}
+
+        ${
+          safeSpecialRequests
+            ? renderSection(
+                "Special requests",
+                `<p style="margin:0;color:#334155;font-size:14px;line-height:1.8;white-space:pre-wrap;">${safeSpecialRequests}</p>`
+              )
+            : ""
+        }
+
+        <div style="margin-top:26px;border-radius:20px;background:#0b1d39;padding:18px 20px;color:#e2e8f0;text-align:center;">
+          <p style="margin:0;font-size:14px;line-height:1.7;">
+            Please review this request and respond to the guest as soon as availability is confirmed.
+          </p>
+        </div>
+      `,
+    });
+
+    const guestHtml = renderEmailShell({
+      badge: "Booking Received",
+      title: "Your booking request has been received",
+      subtitle:
+        "Thank you for choosing Nectar Hotels & Suites. We have received your request and our team is already reviewing availability for your selected dates.",
+      body: `
+        <div style="margin-bottom:18px;border-radius:22px;background:linear-gradient(135deg,#ecfdf3 0%,#f0fdf4 100%);padding:22px;border:1px solid #bbf7d0;">
+          <p style="margin:0;color:#166534;font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">
+            Reservation update
+          </p>
+          <p style="margin:10px 0 0;color:#14532d;font-size:16px;line-height:1.8;">
+            Hello ${safeName}, we will contact you within 24 hours to confirm availability and guide you through the next step.
+          </p>
+        </div>
+
+        ${renderSection("Your stay summary", bookingSummaryTable)}
+
+        ${
+          safeSpecialRequests
+            ? renderSection(
+                "Special requests submitted",
+                `<p style="margin:0;color:#334155;font-size:14px;line-height:1.8;white-space:pre-wrap;">${safeSpecialRequests}</p>`
+              )
+            : ""
+        }
+
+        ${renderSection(
+          "Need to update anything?",
+          `
+            <p style="margin:0 0 12px;color:#334155;font-size:14px;line-height:1.8;">
+              If you want to change details or ask a quick question before confirmation, contact us directly:
             </p>
-          </div>
+            <p style="margin:0 0 8px;color:#1f2937;font-size:14px;">
+              <strong>Phone:</strong>
+              <a href="tel:${hotelContact.phoneHref}" style="color:#2563eb;text-decoration:none;">${hotelContact.phoneDisplay}</a>
+            </p>
+            <p style="margin:0 0 8px;color:#1f2937;font-size:14px;">
+              <strong>WhatsApp:</strong>
+              <a href="https://wa.me/${hotelContact.whatsappNumber}" style="color:#2563eb;text-decoration:none;">${hotelContact.whatsappDisplay}</a>
+            </p>
+            <p style="margin:0;color:#1f2937;font-size:14px;">
+              <strong>Email:</strong>
+              <a href="mailto:${hotelContact.reservationsEmail}" style="color:#2563eb;text-decoration:none;">${hotelContact.reservationsEmail}</a>
+            </p>
+          `
+        )}
 
-          <div style="padding:30px;">
-            <div style="background:#f8fafc;border-left:4px solid #3b82f6;padding:20px;margin-bottom:25px;">
-              <h2 style="color:#1e3a8a;margin:0 0 15px 0;font-size:20px;">Guest Information</h2>
-              <p style="margin:8px 0;color:#374151;"><strong>Name:</strong> ${name}</p>
-              <p style="margin:8px 0;color:#374151;"><strong>Email:</strong> <a href="mailto:${email}" style="color:#3b82f6;">${email}</a></p>
-              <p style="margin:8px 0;color:#374151;"><strong>Phone:</strong> <a href="tel:${phone}" style="color:#3b82f6;">${phone}</a></p>
-            </div>
-
-            <div style="background:#f0f9ff;border-left:4px solid #0ea5e9;padding:20px;margin-bottom:25px;">
-              <h2 style="color:#0c4a6e;margin:0 0 15px 0;font-size:20px;">Booking Details</h2>
-              <p style="margin:8px 0;color:#374151;"><strong>Room Type:</strong> ${roomType}</p>
-              <p style="margin:8px 0;color:#374151;"><strong>Check-in:</strong> ${checkInDate}</p>
-              <p style="margin:8px 0;color:#374151;"><strong>Check-out:</strong> ${checkOutDate}</p>
-              <p style="margin:8px 0;color:#374151;"><strong>Duration:</strong> ${nights} night${
-        nights > 1 ? "s" : ""
-      }</p>
-              <p style="margin:8px 0;color:#374151;"><strong>Rate:</strong> ${formattedRate} per night</p>
-              <p style="margin:8px 0;color:#374151;font-size:18px;"><strong>Total Amount:</strong> <span style="color:#059669;font-weight:bold;">${formattedTotal}</span></p>
-            </div>
-
-            <div style="background:#f0fdf4;border-left:4px solid #22c55e;padding:20px;margin-bottom:25px;">
-              <h2 style="color:#166534;margin:0 0 15px 0;font-size:20px;">Guest Count</h2>
-              <p style="margin:8px 0;color:#374151;"><strong>Adults:</strong> ${adults}</p>
-              <p style="margin:8px 0;color:#374151;"><strong>Children:</strong> ${children}</p>
-            </div>
-
-            ${
-              specialRequests
-                ? `
-              <div style="background:#fefce8;border-left:4px solid #eab308;padding:20px;margin-bottom:25px;">
-                <h2 style="color:#a16207;margin:0 0 15px 0;font-size:20px;">Special Requests</h2>
-                <p style="margin:0;color:#374151;line-height:1.6;">${specialRequests}</p>
-              </div>
-            `
-                : ""
-            }
-
-            <div style="background:#f3f4f6;border-radius:8px;padding:20px;text-align:center;margin-top:30px;">
-              <p style="margin:0;color:#6b7280;font-size:14px;">
-                Please review and confirm this booking request as soon as possible.
-              </p>
-            </div>
-          </div>
+        <div style="margin-top:26px;border-radius:20px;background:#fff7ed;padding:18px 20px;border:1px solid #fdba74;">
+          <p style="margin:0;color:#9a3412;font-size:13px;line-height:1.8;">
+            Important: this message confirms that we received your request. It is not the final booking confirmation yet.
+          </p>
         </div>
       `,
     });
 
     await transporter.sendMail({
       from: `"Nectar Hotels & Suites" <${emailUser}>`,
+      to: hotelContact.reservationsEmail,
+      subject: `New Booking Request - ${roomType} for ${name}`,
+      html: internalHtml,
+    });
+
+    await transporter.sendMail({
+      from: `"Nectar Hotels & Suites" <${emailUser}>`,
       to: email,
       subject: "Booking Request Received - Nectar Hotels & Suites",
-      html: `
-        <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
-          <div style="background:linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%);padding:30px;text-align:center;">
-            <img
-              src="${logoUrl}"
-              alt="Nectar Hotels & Suites"
-              style="width:100%;max-width:180px;height:auto;margin-bottom:10px;"
-            />
-            <h1 style="color:#ffffff;margin:0;font-size:28px;font-weight:bold;">
-              Nectar Hotels & Suites
-            </h1>
-            <p style="color:#e0f2fe;margin:10px 0 0 0;font-size:16px;">
-              Thank you for choosing us
-            </p>
-          </div>
-
-          <div style="padding:30px;">
-            <h2 style="color:#1e3a8a;margin:0 0 20px 0;font-size:24px;">
-              Dear ${name},
-            </h2>
-
-            <p style="font-size:16px;line-height:1.6;color:#374151;margin-bottom:20px;">
-              Thank you for your interest in staying with us. We have received your booking request and are currently reviewing it for availability.
-            </p>
-
-            <div style="background:#f0f9ff;border-left:4px solid #3b82f6;padding:20px;margin:25px 0;">
-              <p style="margin:0;color:#1e40af;font-weight:bold;font-size:16px;">
-                Our team will contact you within 24 hours to confirm your reservation.
-              </p>
-            </div>
-
-            <div style="background:#f8fafc;border-radius:8px;padding:25px;margin:25px 0;">
-              <h3 style="color:#1e3a8a;margin:0 0 15px 0;font-size:20px;">Booking Summary</h3>
-              <div style="border-bottom:1px solid #e5e7eb;padding-bottom:15px;margin-bottom:15px;">
-                <p style="margin:5px 0;color:#374151;"><strong>Room Type:</strong> ${roomType}</p>
-                <p style="margin:5px 0;color:#374151;"><strong>Check-in:</strong> ${checkInDate}</p>
-                <p style="margin:5px 0;color:#374151;"><strong>Check-out:</strong> ${checkOutDate}</p>
-                <p style="margin:5px 0;color:#374151;"><strong>Duration:</strong> ${nights} night${
-        nights > 1 ? "s" : ""
-      }</p>
-              </div>
-              <p style="margin:5px 0;color:#374151;"><strong>Guests:</strong> ${adults} ${adultLabel}, ${children} ${childLabel}</p>
-              <p style="margin:15px 0 0 0;color:#059669;font-weight:bold;font-size:18px;">
-                Total Amount: ${formattedTotal}
-              </p>
-            </div>
-
-            <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:20px;margin:25px 0;">
-              <h3 style="color:#92400e;margin:0 0 15px 0;font-size:18px;">Need to make changes?</h3>
-              <p style="color:#374151;margin-bottom:15px;">
-                If you need to modify your booking or have any questions, please contact us:
-              </p>
-              <div style="color:#374151;">
-                <p style="margin:8px 0;"><strong>Phone:</strong> <a href="tel:${hotelContact.phoneHref}" style="color:#3b82f6;">${hotelContact.phoneDisplay}</a></p>
-                <p style="margin:8px 0;"><strong>Email:</strong> <a href="mailto:${hotelContact.reservationsEmail}" style="color:#3b82f6;">${hotelContact.reservationsEmail}</a></p>
-              </div>
-            </div>
-
-            <div style="background:#fee2e2;border-left:4px solid #ef4444;padding:20px;margin:30px 0;border-radius:4px;">
-              <p style="margin:0;color:#7f1d1d;font-style:italic;font-size:14px;">
-                Important: This is not a booking confirmation. You will receive a separate message once your booking is confirmed and payment instructions are available.
-              </p>
-            </div>
-
-            <div style="text-align:center;margin-top:30px;">
-              <p style="color:#6b7280;font-size:14px;margin:0;">
-                Thank you for choosing Nectar Hotels & Suites<br>
-                We look forward to hosting you.
-              </p>
-            </div>
-          </div>
-        </div>
-      `,
+      html: guestHtml,
     });
 
     return NextResponse.json({
@@ -248,8 +305,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: false,
-        message:
-          `Failed to send booking request. Please try again or contact us on WhatsApp or call ${hotelContact.phoneDisplay}.`,
+        message: `Failed to send booking request. Please try again or contact us on WhatsApp or call ${hotelContact.phoneDisplay}.`,
       },
       { status: 500 }
     );

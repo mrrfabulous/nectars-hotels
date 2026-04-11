@@ -76,13 +76,32 @@ const RoomPageComponent = () => {
                     </p>
                   </div>
 
-                  <div className="mb-8 grid gap-3 text-sm text-gray-700 sm:grid-cols-2">
-                    {room.features.map((feature) => (
-                      <div key={feature} className="flex items-start gap-2">
-                        <BadgeCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
+                  <div
+                    className={`mb-8 rounded-2xl p-5 ${
+                      room.highlights?.length
+                        ? "border border-amber-200 bg-amber-50"
+                        : "bg-white"
+                    }`}
+                  >
+                    <p
+                      className={`text-sm font-semibold uppercase tracking-[0.2em] ${
+                        room.highlights?.length ? "text-amber-700" : "text-primary"
+                      }`}
+                    >
+                      {room.highlights?.length ? "Suite Highlights" : "Room Features"}
+                    </p>
+                    <div className="mt-4 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
+                      {[...(room.highlights ?? []), ...room.features].map((item) => (
+                        <div key={item} className="flex items-start gap-2">
+                          <BadgeCheck
+                            className={`mt-0.5 h-4 w-4 flex-shrink-0 ${
+                              room.highlights?.length ? "text-amber-600" : "text-accent"
+                            }`}
+                          />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-3 sm:flex-row">

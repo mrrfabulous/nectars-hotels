@@ -74,7 +74,7 @@ export function getHotelStructuredData() {
     "@type": "Hotel",
     name: siteName,
     description:
-      "Nectar Hotels & Suites is a welcoming hotel in Bauchi offering direct booking, comfortable stays, and two room options: the Presidential Suite and Standard Room.",
+      "Nectar Hotels & Suites is a welcoming hotel in Bauchi offering direct booking, comfortable stays, and two room options: the Presidential Suite and Executive Room.",
     url: siteUrl,
     image: hotelImages,
     telephone: hotelContact.phoneDisplay,

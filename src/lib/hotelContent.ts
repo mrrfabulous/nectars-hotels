@@ -5,8 +5,8 @@ export const hotelContact = {
   supportPhoneHref: "+2349124248181",
   email: "support@nectarhotelsandsuites.com",
   reservationsEmail: "reservations@nectarhotelsandsuites.com",
-  whatsappNumber: "2348037457342",
-  whatsappDisplay: "+234 803 745 7342",
+  whatsappNumber: "2348036472755",
+  whatsappDisplay: "+234 803 647 2755",
   googleReviewUrl: "https://g.page/r/Cf-eb0cEVi5DEAE/review",
   siteUrl: "https://www.nectarhotelsandsuites.com",
   plusCode: "8Q4Q+P6 Bauchi",
@@ -40,7 +40,7 @@ export function createWhatsAppLink(message: string = whatsappMessage) {
 }
 
 export type RoomType = {
-  id: "presidential-suite" | "standard-room";
+  id: "presidential-suite" | "executive-room";
   name: string;
   tagline: string;
   shortDescription: string;
@@ -49,6 +49,7 @@ export type RoomType = {
   idealFor: string;
   featuredImage: string;
   gallery: string[];
+  highlights?: string[];
   features: string[];
 };
 
@@ -65,34 +66,46 @@ export const roomTypes: RoomType[] = [
   {
     id: "presidential-suite",
     name: "Presidential Suite",
-    tagline: "Premium comfort for guests who want extra room and privacy.",
+    tagline: "A premium suite with a private lounge feel, spacious layout, and a more elevated stay experience.",
     shortDescription:
-      "A more elevated stay with a refined setup, generous comfort, and the calm you need to unwind properly.",
+      "A more exclusive stay with a separate lounge-style sitting area, premium bedroom setup, and the extra space guests notice immediately.",
     longDescription:
-      "Our Presidential Suite is designed for guests who prefer a more spacious and premium experience. It is ideal for executive stays, special getaways, and longer visits where extra comfort matters.",
-    pricePerNight: 50000,
+      "Our Presidential Suite is designed for guests who want more than a standard overnight stay. The suite combines a spacious bedroom with a well-furnished sitting area, giving you room to relax, host a visitor briefly, watch TV in comfort, and enjoy a more private premium environment throughout your stay.",
+    pricePerNight: 110000,
     idealFor: "Business executives, couples, and premium stays",
-    featuredImage: "/images/room 1.jpeg",
-    gallery: ["/images/room 1.jpeg", "/images/room 3.jpeg"],
+    featuredImage: "/images/Presidential_Suite/IMG-20260409-WA0000.jpg",
+    gallery: [
+      "/images/Presidential_Suite/IMG-20260409-WA0001.jpg",
+      "/images/Presidential_Suite/IMG-20260409-WA0002.jpg",
+      "/images/Presidential_Suite/IMG-20260409-WA0003.jpg",
+      "/images/Presidential_Suite/IMG-20260409-WA0004.jpg",
+    ],
+    highlights: [
+      "Dedicated lounge-style sitting area with multiple sofas",
+      "Large wall-mounted TV with a premium media wall finish",
+      "Spacious bedroom with a refined headboard and side table setup",
+      "Extra room to relax, entertain briefly, or work in comfort",
+    ],
     features: [
-      "More spacious room layout",
+      "Spacious suite layout with separate sleeping and lounge feel",
       "Air conditioning",
-      "Television and work desk",
+      "Large wall-mounted television",
       "Comfortable premium bedding",
+      "Private lounge seating area",
       "Private bathroom",
-      "Suitable for longer stays",
+      "Ideal for longer stays and executive comfort",
     ],
   },
   {
-    id: "standard-room",
-    name: "Standard Room",
-    tagline: "A clean, comfortable room for practical and restful stays.",
+    id: "executive-room",
+    name: "Executive Room",
+    tagline: "A refined and comfortable room for business trips and easy relaxation.",
     shortDescription:
-      "A reliable everyday stay with the essentials you need for business trips, short visits, and easy relaxation.",
+      "A well-appointed room with the essentials you need for a polished stay, whether you are travelling for work or rest.",
     longDescription:
-      "Our Standard Room offers a simple and comfortable experience with the amenities most guests need for a pleasant stay. It is a strong fit for short business visits, personal travel, and affordable comfort.",
-    pricePerNight: 25000,
-    idealFor: "Short stays, solo travellers, and value-focused guests",
+      "Our Executive Room offers a comfortable and practical stay with the amenities guests need for a smooth visit. It is ideal for short business trips, personal travel, and guests who want a more elevated everyday room option.",
+    pricePerNight: 33500,
+    idealFor: "Business travellers, solo guests, and value-focused comfort",
     featuredImage: "/images/room 2.jpeg",
     gallery: ["/images/room 2.jpeg", "/images/room 4.jpeg"],
     features: [
@@ -113,20 +126,68 @@ export const gallerySections: GallerySection[] = [
       "A closer look at the two room categories available at Nectar Hotels & Suites.",
     images: [
       {
-        src: "/images/room 1.jpeg",
-        alt: "Presidential suite interior at Nectar Hotels and Suites",
+        src: "/images/Presidential_Suite/IMG-20260409-WA0000.jpg",
+        alt: "Presidential Suite interior at Nectar Hotels and Suites",
       },
       {
         src: "/images/room 2.jpeg",
-        alt: "Standard room interior at Nectar Hotels and Suites",
+        alt: "Executive Room interior at Nectar Hotels and Suites",
       },
       {
-        src: "/images/room 3.jpeg",
-        alt: "Another view of a presidential suite at Nectar Hotels and Suites",
+        src: "/images/Presidential_Suite/IMG-20260409-WA0001.jpg",
+        alt: "Another view of the Presidential Suite at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0002.jpg",
+        alt: "Presidential Suite seating area at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0003.jpg",
+        alt: "Presidential Suite bedroom view at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0004.jpg",
+        alt: "Presidential Suite comfort details at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0005.jpg",
+        alt: "Presidential Suite interior layout at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0006.jpg",
+        alt: "Presidential Suite premium room area at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0007.jpg",
+        alt: "Presidential Suite furnishing detail at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0008.jpg",
+        alt: "Presidential Suite interior ambience at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0009.jpg",
+        alt: "Presidential Suite entertainment and seating area at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0010.jpg",
+        alt: "Presidential Suite luxury stay detail at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0011.jpg",
+        alt: "Presidential Suite interior angle at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0012.jpg",
+        alt: "Presidential Suite room finish at Nectar Hotels and Suites",
+      },
+      {
+        src: "/images/Presidential_Suite/IMG-20260409-WA0013.jpg",
+        alt: "Presidential Suite full room view at Nectar Hotels and Suites",
       },
       {
         src: "/images/room 4.jpeg",
-        alt: "Another view of a standard room at Nectar Hotels and Suites",
+        alt: "Another view of the Executive Room at Nectar Hotels and Suites",
       },
     ],
   },

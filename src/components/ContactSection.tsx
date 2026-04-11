@@ -365,12 +365,20 @@ const ContactSection = () => {
                     disabled={isSubmitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="flex w-full items-center justify-center space-x-2 rounded-lg bg-accent px-6 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                    aria-busy={isSubmitting}
                   >
-                    <span>
-                      {isSubmitting ? "SENDING MESSAGE..." : "SEND MESSAGE"}
-                    </span>
-                    <Send className="h-5 w-5" />
+                    {isSubmitting ? (
+                      <>
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                        <span>SENDING MESSAGE...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>SEND MESSAGE</span>
+                        <Send className="h-5 w-5" />
+                      </>
+                    )}
                   </motion.button>
 
                   <a
