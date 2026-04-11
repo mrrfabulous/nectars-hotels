@@ -10,19 +10,43 @@ import RoomsSection from "../components/RoomsSection";
 import ContactSection from "@/components/ContactSection";
 import AboutSection from "@/components/AboutSection";
 import HomeLoader from "@/components/HomeLoader";
+import { homepageRoomPreview } from "@/lib/hotelContent";
 // import TestimonialsSection from "@/components/TestimonialsSection";
 // import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";
 
 const heroImage = "/images/hero.jpeg";
+const aboutSectionImage = "/images/compound2.jpg";
+const sharedLogoImage = "/images/Update Nectar Hotels.png";
 const minimumLoaderTimeMs = 700;
-const maximumLoaderTimeMs = 2200;
+
+const homepageImages = Array.from(
+  new Set([
+    heroImage,
+    aboutSectionImage,
+    sharedLogoImage,
+    ...homepageRoomPreview.map((room) => room.featuredImage),
+  ])
+);
 
 const preloadImage = (src: string) =>
   new Promise<void>((resolve) => {
     const image = new window.Image();
+    let settled = false;
+
+    const finish = () => {
+      if (!settled) {
+        settled = true;
+        resolve();
+      }
+    };
+
     image.src = src;
-    image.onload = () => resolve();
-    image.onerror = () => resolve();
+    image.onload = finish;
+    image.onerror = finish;
+
+    if (image.complete) {
+      finish();
+    }
   });
 
 export default function Home() {
@@ -44,8 +68,8 @@ export default function Home() {
 
     const readyPage = async () => {
       await Promise.all([
-        Promise.race([preloadImage(heroImage), wait(maximumLoaderTimeMs)]),
         wait(minimumLoaderTimeMs),
+        Promise.all(homepageImages.map(preloadImage)),
       ]);
 
       if (isMounted) {
