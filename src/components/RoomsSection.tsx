@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "@/components/StaticMotion";
 import { ArrowRight } from "lucide-react";
 import { formatNaira, homepageRoomPreview } from "@/lib/hotelContent";
 

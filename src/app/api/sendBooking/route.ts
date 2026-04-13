@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import { formatNaira, hotelContact } from "@/lib/hotelContent";
 
 const logoUrl =
-  "https://www.nectarhotelsandsuites.com/images/Update%20Nectar%20Hotels.png";
+  "https://www.nectarhotelsandsuites.com/images/Update%20Nectar%20Hotels.webp";
 
 function escapeHtml(value: string) {
   return value

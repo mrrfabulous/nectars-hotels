@@ -1,5 +1,3 @@
-"use client";
-
 import { ExternalLink, Star } from "lucide-react";
 // import { ExternalLink, MessageCircleMore, Star } from "lucide-react";
 // import { createWhatsAppLink, hotelContact } from "@/lib/hotelContent";

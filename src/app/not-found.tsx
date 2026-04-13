@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "@/components/StaticMotion";
 
 export default function NotFound() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function NotFound() {
 
       <main className="relative min-h-[80vh] flex items-center justify-center px-4">
         <div className="absolute inset-0 bg-cover bg-center opacity-20" 
-             style={{ backgroundImage: 'url(/images/breakfast-portrait.jpg)' }}>
+             style={{ backgroundImage: "url(/images/hero.webp)" }}>
         </div>
         
         <div className="relative z-10 max-w-2xl text-center">

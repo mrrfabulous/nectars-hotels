@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/components/StaticMotion";
 import {
   CheckCircle,
   Mail,
@@ -93,7 +93,6 @@ const ContactSection = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut" as const,
       },
     },
   };

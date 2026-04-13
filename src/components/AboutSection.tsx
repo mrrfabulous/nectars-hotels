@@ -69,7 +69,7 @@ const AboutSection = () => {
             <div className="relative">
               <div className="relative h-80 rotate-2 overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 hover:rotate-0 lg:h-96">
                 <Image
-                  src="/images/compound2.jpg"
+                  src="/images/compound2.webp"
                   alt="Nectar Hotels & Suites exterior view"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"

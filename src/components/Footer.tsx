@@ -32,10 +32,11 @@ const Footer = () => {
             <div className="mb-4 flex items-center space-x-2">
               <Link href="/" className="relative h-12 w-26">
                 <Image
-                  src="/images/Update Nectar Hotels.png"
+                  src="/images/Update Nectar Hotels.webp"
                   alt="Nectar Hotels and Suites logo"
                   fill
-                  className="object-cover"
+                  sizes="104px"
+                  className="object-contain"
                 />
               </Link>
             </div>

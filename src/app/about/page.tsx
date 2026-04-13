@@ -73,7 +73,7 @@ export default function Page() {
             <div className="relative">
               <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="/images/hero.jpeg"
+                  src="/images/hero.webp"
                   alt="Nectar Hotels & Suites Reception"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"

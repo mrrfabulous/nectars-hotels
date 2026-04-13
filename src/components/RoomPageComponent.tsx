@@ -1,8 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "@/components/StaticMotion";
 import { ArrowRight, BadgeCheck, BedDouble } from "lucide-react";
 import { formatNaira, roomTypes } from "@/lib/hotelContent";
 

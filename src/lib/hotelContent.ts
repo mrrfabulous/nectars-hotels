@@ -106,8 +106,8 @@ export const roomTypes: RoomType[] = [
       "Our Executive Room offers a comfortable and practical stay with the amenities guests need for a smooth visit. It is ideal for short business trips, personal travel, and guests who want a more elevated everyday room option.",
     pricePerNight: 33500,
     idealFor: "Business travellers, solo guests, and value-focused comfort",
-    featuredImage: "/images/room 2.jpeg",
-    gallery: ["/images/room 2.jpeg", "/images/room 4.jpeg"],
+    featuredImage: "/images/room 2.webp",
+    gallery: ["/images/room 2.webp", "/images/room 4.webp"],
     features: [
       "Comfortable double bed",
       "Air conditioning",
@@ -130,7 +130,7 @@ export const gallerySections: GallerySection[] = [
         alt: "Presidential Suite interior at Nectar Hotels and Suites",
       },
       {
-        src: "/images/room 2.jpeg",
+        src: "/images/room 2.webp",
         alt: "Executive Room interior at Nectar Hotels and Suites",
       },
       {
@@ -186,7 +186,7 @@ export const gallerySections: GallerySection[] = [
         alt: "Presidential Suite full room view at Nectar Hotels and Suites",
       },
       {
-        src: "/images/room 4.jpeg",
+        src: "/images/room 4.webp",
         alt: "Another view of the Executive Room at Nectar Hotels and Suites",
       },
     ],
@@ -197,15 +197,15 @@ export const gallerySections: GallerySection[] = [
       "The shared spaces that shape the arrival and stay experience for every guest.",
     images: [
       {
-        src: "/images/reception.jpeg",
+        src: "/images/reception.webp",
         alt: "Reception area at Nectar Hotels and Suites",
       },
       {
-        src: "/images/dinning.jpeg",
+        src: "/images/dinning.webp",
         alt: "Dining area at Nectar Hotels and Suites",
       },
       {
-        src: "/images/hero.jpeg",
+        src: "/images/hero.webp",
         alt: "Front desk and lobby area at Nectar Hotels and Suites",
       },
     ],
@@ -216,15 +216,15 @@ export const gallerySections: GallerySection[] = [
       "A look at the compound and surroundings that make the property easy to access and comfortable to navigate.",
     images: [
       {
-        src: "/images/compound.jpg",
+        src: "/images/compound.webp",
         alt: "Main courtyard view at Nectar Hotels and Suites",
       },
       {
-        src: "/images/compound1.jpg",
+        src: "/images/compound1.webp",
         alt: "Drive-in compound view at Nectar Hotels and Suites",
       },
       {
-        src: "/images/compound2.jpg",
+        src: "/images/compound2.webp",
         alt: "Exterior building view at Nectar Hotels and Suites",
       },
     ],

@@ -25,10 +25,11 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="w-26 h-12 relative">
             <Image
-              src="/images/Update Nectar Hotels.png"
-              alt="Logo"
+              src="/images/Update Nectar Hotels.webp"
+              alt="Nectar Hotels and Suites logo"
               fill
-              className="object-cover"
+              sizes="104px"
+              className="object-contain"
             />
           </Link>
 
@@ -59,6 +60,9 @@ const Header = () => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isMenuOpen ? (
               <X className="h-6 w-6 text-neutral" />
@@ -71,7 +75,7 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden pb-4">
-            <nav className="flex flex-col space-y-4">
+            <nav id="mobile-navigation" className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
