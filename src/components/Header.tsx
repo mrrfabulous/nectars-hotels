@@ -21,15 +21,18 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-primary backdrop-blur supports-[backdrop-filter]:bg-primary/90 shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex items-center justify-between py-1">
           {/* Logo */}
-          <Link href="/" className="w-26 h-12 relative">
+         <Link
+            href="/"
+            className="relative block h-10 w-32 flex-shrink-0 sm:h-12 sm:w-40 lg:h-14 lg:w-48"
+          >
             <Image
-              src="/images/Update Nectar Hotels.webp"
+              src="/images/nectar-logo-tight.webp"
               alt="Nectar Hotels and Suites logo"
               fill
-              sizes="104px"
-              className="object-contain"
+              sizes="(min-width: 1024px) 192px, (min-width: 640px) 160px, 128px"
+              className="object-contain object-left"
             />
           </Link>
 

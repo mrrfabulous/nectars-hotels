@@ -35,18 +35,24 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: siteName,
+    default: "Luxury Hotel in Bauchi | Nectar Hotels & Suites",
     template: `%s | ${siteName}`,
   },
   description:
-    "Nectar Hotels & Suites is a luxury hotel located in Bauchi, Nigeria. It offers a range of amenities and services to make your stay comfortable and enjoyable.",
+    "Book Nectar Hotels & Suites in New GRA, Bauchi for comfortable rooms, direct reservations, dining, parking, Wi-Fi, and warm hospitality.",
   keywords: [
-    "hotel in Bauchi",
-    "Nectar Hotels and Suites",
+    "hotels in Bauchi",
+    "hotel in New GRA Bauchi",
+    "Nectar Hotels & Suites",
     "Bauchi accommodation",
+    "suites in Bauchi",
     "Presidential Suite Bauchi",
     "Executive Room Bauchi",
     "hotel booking Bauchi",
+    "affordable hotel in Bauchi",
+    "restaurant in Bauchi",
+    "lounge in Bauchi",
+    "hotel with parking in Bauchi",
   ],
   alternates: {
     canonical: "/",

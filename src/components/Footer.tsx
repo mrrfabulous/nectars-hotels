@@ -30,14 +30,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-6">
           <div className="col-span-1 md:col-span-3">
             <div className="mb-4 flex items-center space-x-2">
-              <Link href="/" className="relative h-12 w-26">
-                <Image
-                  src="/images/Update Nectar Hotels.webp"
-                  alt="Nectar Hotels and Suites logo"
-                  fill
-                  sizes="104px"
-                  className="object-contain"
-                />
+              <Link
+                  href="/"
+                  className="relative block h-10 w-32 flex-shrink-0 sm:h-12 sm:w-40 lg:h-14 lg:w-48"
+                >
+                  <Image
+                    src="/images/nectar-logo-tight.webp"
+                    alt="Nectar Hotels and Suites logo"
+                    width={950}
+                    height={394}
+                    className="h-full w-auto object-contain object-left"
+                  />
               </Link>
             </div>
             <p className="mb-4 leading-relaxed text-blue-100">
